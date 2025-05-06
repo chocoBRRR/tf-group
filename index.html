@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>T&F Group</title>
+  <title>T&F Group - Demande de projet</title>
+
+  <!-- Import de la police Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet"/>
+
   <style>
+    /* Réinitialisation des marges et polices globales */
     * {
       margin: 0;
       padding: 0;
@@ -14,59 +18,131 @@
     }
 
     body, html {
-      height: 100%;
       background-color: #f0f0f0;
+      color: #333;
     }
 
+    /* SECTION HERO AVEC IMAGE DE FOND */
     .hero {
       background-image: url('background.png');
       background-size: cover;
       background-position: center;
-      height: 100vh;
+      height: 90vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       color: white;
       text-align: center;
-      padding: 0 20px;
+      padding-top: 100px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
     .hero h1 {
       font-size: 3rem;
       font-weight: 700;
       text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+      margin-bottom: 1rem;
     }
 
     .hero p {
       font-size: 1.2rem;
-      margin-top: 1rem;
-      max-width: 700px;
+      max-width: 600px;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }
 
+    /* SECTION FORMULAIRE */
     .form-section {
-      padding: 50px 20px;
       background-color: white;
+      padding: 60px 20px;
+      max-width: 800px;
+      margin: 60px auto;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
     }
 
     .form-section h2 {
+      font-size: 2rem;
       text-align: center;
-      margin-bottom: 30px;
-      font-weight: 500;
+      margin-bottom: 2rem;
       color: #222;
     }
 
-    iframe {
-      display: block;
-      margin: 0 auto;
-      border: none;
-      width: 100%;
-      max-width: 640px;
-      height: 1000px;
+    form {
+      display: grid;
+      gap: 1.2rem;
     }
 
-    @media (max-width: 768px) {
+    input, textarea {
+      padding: 0.9rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: none;
+    }
+
+    .double {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .double input {
+      flex: 1;
+    }
+
+    button {
+      padding: 1rem;
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+
+    /* PETIT TEXTE CONFIDENTIALITÉ */
+    .privacy-note {
+      font-size: 0.7rem;
+      color: #a89f94;
+      text-align: center;
+      opacity: 0.9;
+      margin-top: 0.2rem;
+    }
+
+    /* MESSAGE DE CONFIRMATION */
+    #confirmation {
+      display: none;
+      color: #4CAF50;
+      font-size: 1rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    /* FOOTER */
+    footer {
+      background-color: #e8e0d8;
+      border-top: 1px solid #d6c9be;
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+
+    footer p {
+      color: #7a5a3c;
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
       .hero h1 {
         font-size: 2rem;
       }
@@ -74,42 +150,71 @@
       .hero p {
         font-size: 1rem;
       }
-
-      iframe {
-        height: 1200px;
-      }
     }
   </style>
 </head>
 <body>
-  <section class="hero">
-    <h1>T&F Group</h1>
-    <p>Vos envies. Notre mission.</p>
-  </section>
 
-  <section style="padding: 4rem 1rem; max-width: 800px; margin: auto; font-family: 'Roboto', sans-serif;">
-  <h2 style="font-size: 2rem; margin-bottom: 1rem; text-align: center;">Décrivez-nous votre projet</h2>
-  <form name="contact" method="POST" data-netlify="true" style="display: grid; gap: 1rem;">
-    <input type="hidden" name="form-name" value="contact" />
-    
-    <div style="display: flex; gap: 1rem;">
-      <input type="text" name="prenom" placeholder="Prénom" required style="flex: 1; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px;">
-      <input type="text" name="nom" placeholder="Nom" required style="flex: 1; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px;">
+<!-- SECTION HERO AVEC IMAGE ET ACCROCHE -->
+<section class="hero">
+  <h1>T&F Group</h1>
+  <p>Vos envies. Notre mission.</p>
+</section>
+
+<!-- FORMULAIRE DE DEMANDE -->
+<section class="form-section">
+  <h2>Décrivez-nous votre projet</h2>
+
+  <form id="contact-form">
+    <!-- Prénom et Nom côte à côte -->
+    <div class="double">
+      <input type="text" name="prenom" placeholder="Prénom" required>
+      <input type="text" name="nom" placeholder="Nom" required>
     </div>
-    
-    <input type="email" name="email" placeholder="Adresse e-mail" required style="padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px;">
-    
-    <input type="tel" name="telephone" placeholder="Numéro de téléphone" required style="padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px;">
-    
-    <textarea name="projet" rows="5" placeholder="Description du projet" required style="padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px;"></textarea>
-    
-    <button type="submit" style="padding: 1rem; background-color: black; color: white; border: none; border-radius: 6px; font-weight: bold;">Envoyer</button>
-    <p style="font-size: 0.7rem; color: #111411; text-align: center; opacity: 0.9; margin-top: 0.1rem;">
-  Vos données sont précieuses. Nous nous engageons à ne jamais les partager et à les utiliser uniquement pour vous recontacter dans le cadre de votre projet.
-</p>
 
+    <input type="email" name="email" placeholder="Adresse e-mail" required>
+    <input type="tel" name="telephone" placeholder="Numéro de téléphone" required>
+    <textarea name="projet" rows="5" placeholder="Description du projet" required></textarea>
+
+    <button type="submit">Envoyer</button>
+
+    <p class="privacy-note">
+      Vos données sont précieuses. Nous nous engageons à ne jamais les partager et à les utiliser uniquement pour vous recontacter dans le cadre de votre projet.
+    </p>
+
+    <p id="confirmation">
+      📩 Projet envoyé ! Nous reviendrons vers vous au plus vite.
+    </p>
   </form>
 </section>
+
+<!-- FOOTER -->
+<footer>
+  <p>T&F Group © 2025. Tous droits réservés.</p>
+</footer>
+
+<!-- SCRIPT DE GESTION DU FORMULAIRE + ENVOI VERS GOOGLE SHEETS -->
+<script>
+  const form = document.getElementById('contact-form');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(form));
+
+    fetch('https://script.google.com/macros/s/AKfycbxT0NW8KOMsBXjE-Yi4VFS-AxDiY6PqgXZ-El4HH-Ji7q_nMNXN-mZuGws2LEMBjxqEpw/exec', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => {
+      if (res.ok) {
+        document.getElementById('confirmation').style.display = 'block';
+        form.reset();
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
