@@ -190,24 +190,32 @@
 
 <!-- SCRIPT DE GESTION DU FORMULAIRE + ENVOI VERS GOOGLE SHEETS -->
 <script>
-  const form = document.getElementById('contact-form');
+  const form = document.querySelector('form');
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const data = Object.fromEntries(new FormData(form));
 
-    fetch('https://script.google.com/macros/s/AKfycbxT0NW8KOMsBXjE-Yi4VFS-AxDiY6PqgXZ-El4HH-Ji7q_nMNXN-mZuGws2LEMBjxqEpw/exec', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(res => {
-      if (res.ok) {
-        document.getElementById('confirmation').style.display = 'block';
+    try {
+      const response = await fetch('https://n8n.srv805694.hstgr.cloud/webhook/formulaire-site', {  
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        alert("Projet envoyé, nous reviendrons vers vous au plus vite.");
         form.reset();
+      } else {
+        alert("Une erreur s'est produite. Veuillez réessayer.");
       }
-    });
+    } catch (error) {
+      console.error("Erreur lors de l'envoi :", error);
+      alert("Erreur réseau. Vérifiez votre connexion.");
+    }
   });
 </script>
 
