@@ -207,7 +207,7 @@
       });
 
       if (response.ok) {
-        alert("Projet envoyé, nous reviendrons vers vous au plus vite.");
+        document.getElementById('confirmation').style.display = 'block';
         form.reset();
       } else {
         alert("Une erreur s'est produite. Veuillez réessayer.");
