@@ -50,26 +50,26 @@
 
     .form-section {
       background-color: white;
-      padding: 60px 10px;
+      padding: 60px 20px 10px 20px; /* ✅ padding bottom réduit */
       max-width: 800px;
       margin: 60px auto;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0,0,0,0.05);
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    }
+
+    .form-section > *:not(:last-child) {
+      margin-bottom: 10px; /* ✅ espacement entre les enfants uniquement */
     }
 
     .form-section h2 {
       font-size: 2rem;
-      margin-bottom: 2rem;
-      color: #222;
+      margin-bottom: 1rem; /* ✅ h2 compact */
     }
 
     form {
       display: grid;
-      gap: 1.2rem;
+      gap: 1rem;
     }
 
     input, textarea {
@@ -101,6 +101,7 @@
       font-size: 0.7rem;
       color: #555;
       text-align: center;
+      margin-bottom: 0; /* ✅ pas d'espace sous le dernier élément */
     }
 
     .fade-out { opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
@@ -155,7 +156,7 @@
     @media (max-width: 600px) {
       .hero-logo { max-width: 200px; }
       .hero-text { font-size: 1rem; }
-      .form-section { padding: 30px 15px; margin: 30px auto; }
+      .form-section { padding: 30px 15px 10px 15px; }
     }
   </style>
 </head>
