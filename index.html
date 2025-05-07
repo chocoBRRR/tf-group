@@ -50,7 +50,7 @@
 
     .form-section {
       background-color: white;
-      padding: 60px 20px 10px 20px;
+      padding: 30px 20px 0 20px; /* ✅ padding top réduit, bottom réduit à 0 */
       max-width: 800px;
       margin: 60px auto;
       border-radius: 12px;
@@ -64,12 +64,12 @@
 
     .form-section h2 {
       font-size: 2rem;
-      margin-bottom: 4rem;
+      margin-bottom: 3rem; /* ✅ plus d'espace sous le titre */
     }
 
     form {
       display: grid;
-      gap: 20px; /* ✅ Plus d’air entre les champs */
+      gap: 20px;
     }
 
     input, textarea {
@@ -101,7 +101,7 @@
       font-size: 0.7rem;
       color: #555;
       text-align: center;
-      margin-top: 10px; /* ✅ Espace entre bouton et phrase */
+      margin-top: 10px;
     }
 
     .fade-out { opacity: 0; transition: opacity 0.6s ease; pointer-events: none; }
@@ -156,17 +156,10 @@
     @media (max-width: 600px) {
       .hero-logo { max-width: 200px; }
       .hero-text { font-size: 1rem; }
-      .form-section { padding: 30px 15px 10px 15px; }
-       .form-section h2 {
-    margin-bottom: 3rem;
-
-      form {
-        gap: 24px; /* ✅ Encore plus d’air sur mobile */
-      }
-
-      .privacy-note {
-        margin-top: 40px; /* ✅ Sur mobile aussi → plus aéré */
-      }
+      .form-section { padding: 30px 15px 0 15px; }
+      .form-section h2 { margin-bottom: 3rem; }
+      form { gap: 24px; }
+      .privacy-note { margin-top: 40px; }
     }
   </style>
 </head>
