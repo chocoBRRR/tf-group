@@ -48,20 +48,24 @@
 
     .show { opacity: 1; transform: translateY(0); }
 
-    .form-section {
-  background-color: rgba(255, 255, 255, 0.95); /* ✅ Blanc légèrement transparent pour lisibilité */
-  background-image: url('background-renovation-optimized.webp'); /* ✅ Ton image optimisée */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+    .form-background {
+      background-image: url('background-renovation-optimized.webp');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      padding: 60px 0;
+    }
 
-  padding: 30px 20px 0 20px; /* ✅ padding top + bottom ajustés */
-  max-width: 800px;
-  margin: 60px auto;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.05);
-  text-align: center;
-}
+    .form-section {
+      background-color: white;
+      padding: 30px 20px 0 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+      text-align: center;
+    }
 
     .form-section > *:not(:last-child) {
       margin-bottom: 10px;
@@ -69,7 +73,7 @@
 
     .form-section h2 {
       font-size: 2rem;
-      margin-bottom: 4rem; /* ✅ plus d'espace sous le titre */
+      margin-bottom: 3rem;
     }
 
     form {
@@ -175,25 +179,27 @@
   <p class="hero-text">Chez T&F, nous nous engageons à offrir un service de rénovation sur mesure, adapté à vos besoins. Prenez rendez-vous dès aujourd'hui pour découvrir comment nos experts peuvent transformer votre espace.</p>
 </section>
 
-<section class="form-section">
-  <h2>Décrivez-nous votre projet</h2>
-  <form id="contact-form">
-    <div class="double">
-      <input type="text" name="prenom" placeholder="Prénom" required>
-      <input type="text" name="nom" placeholder="Nom" required>
-    </div>
-    <input type="email" name="email" placeholder="Adresse e-mail" required>
-    <input type="tel" name="telephone" placeholder="Numéro de téléphone" required>
-    <textarea name="projet" rows="5" placeholder="Description du projet" required></textarea>
-    <button type="submit">Envoyer</button>
-    <p class="privacy-note">Vos données sont précieuses. Nous nous engageons à ne jamais les partager et à les utiliser uniquement pour vous recontacter dans le cadre de votre projet.</p>
-  </form>
+<div class="form-background">
+  <section class="form-section">
+    <h2>Décrivez-nous votre projet</h2>
+    <form id="contact-form">
+      <div class="double">
+        <input type="text" name="prenom" placeholder="Prénom" required>
+        <input type="text" name="nom" placeholder="Nom" required>
+      </div>
+      <input type="email" name="email" placeholder="Adresse e-mail" required>
+      <input type="tel" name="telephone" placeholder="Numéro de téléphone" required>
+      <textarea name="projet" rows="5" placeholder="Description du projet" required></textarea>
+      <button type="submit">Envoyer</button>
+      <p class="privacy-note">Vos données sont précieuses. Nous nous engageons à ne jamais les partager et à les utiliser uniquement pour vous recontacter dans le cadre de votre projet.</p>
+    </form>
 
-  <div id="confirmation-message">
-    <div class="checkmark"></div>
-    <p>📩 Merci ! Votre projet a bien été envoyé.<br>Nous reviendrons vers vous très rapidement.</p>
-  </div>
-</section>
+    <div id="confirmation-message">
+      <div class="checkmark"></div>
+      <p>📩 Merci ! Votre projet a bien été envoyé.<br>Nous reviendrons vers vous très rapidement.</p>
+    </div>
+  </section>
+</div>
 
 <script>
 const form=document.getElementById("contact-form"),
