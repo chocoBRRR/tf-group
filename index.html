@@ -59,6 +59,7 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+      min-height: 250px; /* ✅ ajusté pour ne pas avoir trop de vide */
     }
 
     .form-section h2 {
@@ -155,7 +156,7 @@
     @media (max-width: 600px) {
       .hero-logo { max-width: 250px; }
       .hero-text { font-size: 1rem; }
-      .form-section { padding: 30px 15px; margin: 30px auto; }
+      .form-section { padding: 30px 15px; margin: 30px auto; min-height: 200px; } /* ✅ encore plus ajusté sur mobile */
     }
   </style>
 </head>
