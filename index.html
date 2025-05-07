@@ -195,7 +195,13 @@
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    const data = Object.fromEntries(new FormData(form));
+    const data = {
+  prenom: form.prenom.value.trim(),
+  nom: form.nom.value.trim(),
+  email: form.email.value.trim(),
+  telephone: form.telephone.value.trim(),
+  projet: form.projet.value.trim()
+};
 
     try {
       const response = await fetch('https://n8n.srv805694.hstgr.cloud/webhook/formulaire-site', {  
