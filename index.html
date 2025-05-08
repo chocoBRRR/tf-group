@@ -51,7 +51,7 @@
     .form-section {
       background-color: white;
       padding: 30px 20px 1rem 20px;
-      max-width: 800px;
+      max-width: 100%;
       margin: 60px auto;
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0,0,0,0.05);
@@ -159,13 +159,49 @@
     }
 
     @media (max-width: 600px) {
-      .hero-logo { max-width: 200px; }
-      .hero-text { font-size: 1rem; }
-      .form-section { padding: 30px 15px 0.1rem 15px; }
-      .form-section h2 { margin-bottom: 3rem; }
-      form { gap: 24px; }
-      .privacy-note { margin-top: 40px; }
-    }
+  .hero-logo { 
+    max-width: 200px;  /* Réduction de la taille du logo sur mobile */
+  }
+  
+  .hero-text {
+    font-size: 1rem;  /* Taille de texte plus petite sur mobile */
+  }
+
+  .form-section {
+    padding: 20px 15px;
+    max-width: 95%;  /* Réduire la largeur du formulaire */
+    margin: 20px auto;
+  }
+
+  .form-section h2 {
+    font-size: 1.5rem;  /* Réduire la taille du titre */
+    margin-bottom: 2rem;
+  }
+
+  form {
+    gap: 12px;  /* Plus d'espacement entre les champs */
+  }
+
+  .double {
+    flex-direction: column;  /* Empiler prénom et nom verticalement */
+    gap: 1rem;
+  }
+
+  input, textarea {
+    width: 100%;  /* Les champs prennent toute la largeur */
+    padding: 0.8rem;  /* Légèrement plus petit pour mieux s'adapter */
+  }
+
+  .privacy-note {
+    font-size: 0.8rem;  /* Texte plus petit sur mobile */
+    margin-top: 20px;
+  }
+
+  button {
+    padding: 0.8rem;  /* Réduire un peu la taille du bouton */
+    font-size: 1rem;  /* Ajuster la taille du texte du bouton */
+  }
+}
   </style>
 </head>
 <body>
