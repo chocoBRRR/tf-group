@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T&amp;F - Mentions légales</title>
+<link rel="icon" href="Copie%20de%20LOGO_FAVICON.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive: #3F4A3C;
+    --beige: #E9E4DA;
+    --gold: #C8A96A;
+    --graphite: #1E1E1E;
+    --white: #FAFAF7;
+    --gold-light: #DFC08A;
+    --text-muted: #6F6B62;
+    --border: rgba(63,74,60,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--beige); }
+  ::-webkit-scrollbar-thumb { background: var(--olive); border-radius: 2px; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--graphite);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 500; line-height: 1.08; }
+  p, li { font-weight: 300; line-height: 1.8; color: var(--text-muted); }
+  a { color: inherit; }
+
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 0 48px; height: 80px;
+    display: grid; grid-template-columns: auto 1fr auto; align-items: center;
+    background: rgba(250,250,247,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.35s, box-shadow 0.35s, background 0.35s, height 0.35s, padding 0.35s, backdrop-filter 0.35s;
+  }
+  nav.scrolled {
+    height: 68px;
+    padding: 0 36px;
+    background: rgba(250,250,247,0.78);
+    backdrop-filter: blur(14px);
+    border-bottom-color: var(--border);
+    box-shadow: 0 8px 28px rgba(30,30,30,0.05);
+  }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; margin-left: 10px; }
+  .nav-logo img { height: 80px; width: auto; display: block; max-width: 260px; object-fit: contain; transition: height 0.35s; }
+  nav.scrolled .nav-logo img { height: 62px; }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 34px;
+    list-style: none;
+    margin: 0;
+    padding: 0 16px 0 96px;
+  }
+  .nav-links a {
+    position: relative;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+    color: var(--graphite);
+    opacity: 0.7;
+    padding: 6px 0;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:not(.nav-cta)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    opacity: 0;
+    transform: scaleX(0.7);
+    transform-origin: left center;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--olive); }
+  .nav-links a:not(.nav-cta):hover::after { opacity: 0.45; transform: scaleX(1); }
+  .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-self: end;
+    background: var(--olive);
+    color: var(--white) !important;
+    opacity: 1 !important;
+    padding: 12px 26px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    line-height: 1;
+    transition: background 0.25s !important;
+  }
+  .nav-cta:hover { background: var(--graphite) !important; }
+  .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .nav-burger span { width: 24px; height: 1.5px; background: var(--graphite); display: block; transition: all 0.3s; }
+
+  .mobile-nav {
+    position: fixed; inset: 0; z-index: 999;
+    background: var(--white);
+    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 40px;
+    transform: translateY(-100%);
+    transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .mobile-nav.open { transform: translateY(0); }
+  .mobile-nav a {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--graphite);
+    text-decoration: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s, transform 0.4s, color 0.2s;
+  }
+  .mobile-nav.open a { opacity: 1; transform: translateY(0); }
+  .mobile-nav.open a:nth-child(1){transition-delay:0.1s}
+  .mobile-nav.open a:nth-child(2){transition-delay:0.15s}
+  .mobile-nav.open a:nth-child(3){transition-delay:0.2s}
+  .mobile-nav.open a:nth-child(4){transition-delay:0.25s}
+  .mobile-nav.open a:nth-child(5){transition-delay:0.3s}
+  .mobile-nav.open a:nth-child(6){transition-delay:0.35s}
+  .mobile-nav a:hover { color: var(--gold); }
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top right, rgba(200,169,106,0.18), transparent 32%),
+      linear-gradient(180deg, #f2ede4 0%, var(--white) 100%);
+    padding: 170px 0 44px;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.8fr);
+    gap: 28px;
+    align-items: end;
+  }
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  .label::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+    display: block;
+  }
+  .page-title {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    color: var(--graphite);
+    margin-bottom: 24px;
+  }
+  .page-title em { color: var(--gold); font-style: italic; }
+  .page-subtitle {
+    max-width: 700px;
+    font-size: 1rem;
+    line-height: 1.9;
+    margin-bottom: 18px;
+  }
+  .page-updated {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(30,30,30,0.42);
+  }
+  .hero-note {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 26px 26px 24px;
+    box-shadow: 0 16px 40px rgba(30,30,30,0.04);
+  }
+  .hero-note-title {
+    font-size: 1.1rem;
+    color: var(--graphite);
+    margin-bottom: 12px;
+  }
+  .hero-note-list {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+  .hero-note-list li strong { color: var(--graphite); font-weight: 600; }
+
+  .content {
+    padding: 28px 0 110px;
+  }
+  .legal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+  .legal-card {
+    background: var(--white);
+    padding: 34px 34px 30px;
+    min-height: 100%;
+  }
+  .legal-card--olive { background: var(--olive); }
+  .legal-card-title {
+    font-size: 1.24rem;
+    color: var(--graphite);
+    margin-bottom: 16px;
+  }
+  .legal-card--olive .legal-card-title { color: var(--white); }
+  .legal-card p { font-size: 0.9rem; }
+  .legal-list {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+  .legal-list strong {
+    color: var(--graphite);
+    font-weight: 600;
+  }
+  .legal-card--olive li,
+  .legal-card--olive p { color: rgba(250,250,247,0.74); }
+  .legal-card--olive strong { color: var(--white); }
+  .legal-card a {
+    text-decoration: none;
+    border-bottom: 1px solid rgba(30,30,30,0.18);
+  }
+  .legal-card--olive a { border-bottom-color: rgba(250,250,247,0.25); }
+  footer { background: #141414; padding: 40px 0 24px; }
+  .footer-grid { display: grid; grid-template-columns: 1.55fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 32px; align-items: start; }
+  .footer-grid > div:first-child { display: block; }
+  .footer-brand { display: flex; align-items: flex-start; justify-content: flex-start; gap: 12px; width: auto; max-width: 100%; }
+  .footer-logo { display: flex; align-items: center; margin-bottom: 0; flex-shrink: 0; }
+  .footer-logo img { height: 62px; width: auto; }
+  .footer-desc { font-size: 0.76rem; color: rgba(250,250,247,0.4); line-height: 1.68; max-width: 300px; margin-top: 1px; }
+  .footer-col-title { font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(250,250,247,0.42); font-weight: 600; margin-bottom: 16px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-links a { text-decoration: none; font-size: 0.78rem; color: rgba(250,250,247,0.5); transition: color 0.2s; position: relative; }
+  .footer-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    opacity: 0;
+    transform: scaleX(0.75);
+    transform-origin: left center;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-links a:hover::after { opacity: 0.4; transform: scaleX(1); }
+  .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .footer-contact-item svg { width: 13px; height: 13px; stroke: var(--gold); fill: none; stroke-width: 1.5; margin-top: 2px; flex-shrink: 0; }
+  .footer-contact-item a, .footer-contact-item span { font-size: 0.78rem; color: rgba(250,250,247,0.5); line-height: 1.58; text-decoration: none; transition: color 0.2s; }
+  .footer-contact-item a:hover { color: var(--gold); }
+  .footer-bottom { border-top: 1px solid rgba(250,250,247,0.06); padding-top: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-copy { font-size: 0.68rem; color: rgba(250,250,247,0.25); }
+  .footer-legal { display: flex; gap: 24px; }
+  .footer-legal a { font-size: 0.68rem; color: rgba(250,250,247,0.25); text-decoration: none; transition: color 0.2s; }
+  .footer-legal a:hover { color: var(--gold); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 28px; height: 80px; }
+    nav.scrolled { padding: 0 20px; height: 66px; }
+    .nav-logo { margin-left: 0; }
+    .nav-logo img { height: 72px; }
+    nav.scrolled .nav-logo img { height: 58px; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+    .hero-grid, .legal-grid, .footer-grid { grid-template-columns: 1fr; }
+    .container { padding: 0 24px; }
+    .hero { padding: 138px 0 44px; }
+  }
+
+  @media (max-width: 600px) {
+    .footer-bottom { flex-direction: column; }
+    .legal-card { padding: 26px 24px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html#about" onclick="closeMobileNav()">L'entreprise</a>
+  <a href="index.html#realizations" onclick="closeMobileNav()">Réalisations</a>
+  <a href="index.html#services" onclick="closeMobileNav()">Services</a>
+  <a href="index.html#methode" onclick="closeMobileNav()">Méthode</a>
+  <a href="index.html#avis" onclick="closeMobileNav()">Avis clients</a>
+  <a href="index.html#projet" onclick="closeMobileNav()" style="color:var(--gold)">Parlez de votre projet</a>
+</div>
+
+<nav id="navbar">
+  <a href="index.html#hero" class="nav-logo">
+    <img src="Copie%20de%20LOGO_PNG_NOIR.PNG" alt="T&amp;F Rénovation">
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">L'entreprise</a></li>
+    <li><a href="index.html#realizations">Réalisations</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#methode">Méthode</a></li>
+    <li><a href="index.html#avis">Avis clients</a></li>
+  </ul>
+  <a href="index.html#projet" class="nav-cta">Parlons de votre projet</a>
+  <button class="nav-burger" id="burgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="label">Informations légales</div>
+      <h1 class="page-title">Mentions <em>légales.</em></h1>
+      <p class="page-subtitle">Cette page regroupe les informations d’identification de T&amp;F, du responsable de publication et de l’hébergeur du site. Elle est accessible depuis le footer et n’apparaît pas dans le flux de la landing page.</p>
+      <p class="page-updated">Dernière mise à jour : 17 avril 2026</p>
+    </div>
+    <aside class="hero-note">
+      <h2 class="hero-note-title">En bref</h2>
+      <ul class="hero-note-list">
+        <li><strong>Société :</strong> T&amp;F, SAS</li>
+        <li><strong>RCS :</strong> Beauvais 943 459 206</li>
+        <li><strong>Publication :</strong> Théo Da Silva Domingues</li>
+        <li><strong>Hébergement :</strong> GitHub Pages</li>
+      </ul>
+    </aside>
+  </div>
+</header>
+
+<main class="content">
+  <div class="container">
+    <div class="legal-grid">
+      <article class="legal-card">
+        <h2 class="legal-card-title">Éditeur du site</h2>
+        <ul class="legal-list">
+          <li><strong>Dénomination sociale :</strong> T&amp;F</li>
+          <li><strong>Forme juridique :</strong> société par actions simplifiée (SAS)</li>
+          <li><strong>Capital social :</strong> 1 000&nbsp;€</li>
+          <li><strong>Siège social :</strong> 5 rue du Billoy, 60240 Boubiers, France</li>
+          <li><strong>SIREN :</strong> 943 459 206</li>
+          <li><strong>RCS :</strong> Beauvais 943 459 206</li>
+          <li><strong>TVA intracommunautaire :</strong> FR80 943459206</li>
+        </ul>
+      </article>
+
+      <article class="legal-card legal-card--olive">
+        <h2 class="legal-card-title">Publication et contact</h2>
+        <ul class="legal-list">
+          <li><strong>Directeur de la publication :</strong> Théo Da Silva Domingues</li>
+          <li><strong>Téléphone :</strong> <a href="tel:+33601460816">+33 6 01 46 08 16</a></li>
+          <li><strong>Email :</strong> <a href="mailto:f.brisson@tf-group.fr">f.brisson@tf-group.fr</a></li>
+          <li><strong>Contact :</strong> par téléphone ou par email aux coordonnées ci-dessus.</li>
+        </ul>
+      </article>
+
+      <article class="legal-card">
+        <h2 class="legal-card-title">Hébergement</h2>
+        <ul class="legal-list">
+          <li><strong>Hébergeur du site :</strong> GitHub, Inc.</li>
+          <li><strong>Adresse :</strong> 88 Colin P. Kelly Jr. St., San Francisco, CA 94107, United States</li>
+          <li><strong>Service utilisé :</strong> GitHub Pages</li>
+          <li><strong>Support :</strong> <a href="https://support.github.com" target="_blank" rel="noopener noreferrer">support.github.com</a></li>
+        </ul>
+      </article>
+
+      <article class="legal-card">
+        <h2 class="legal-card-title">Propriété intellectuelle</h2>
+        <p>La structure du site, sa direction artistique, ses textes, visuels, éléments graphiques, logos et, plus généralement, l’ensemble des contenus accessibles sur ce site sont protégés par les dispositions applicables au droit de la propriété intellectuelle. Toute reproduction, représentation, adaptation, modification ou exploitation, totale ou partielle, sans autorisation préalable de T&amp;F ou des titulaires de droits concernés, est interdite.</p>
+      </article>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="Copie%20de%20LOGO_PNG_BLANC.PNG" alt="T&amp;F Group">
+          </div>
+          <p class="footer-desc">T&amp;F - Entreprise de rénovation tous corps d'état.<br>Rigueur, transparence et suivi personnalisé au service de votre projet.</p>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="index.html#about">L'entreprise</a></li>
+          <li><a href="index.html#realizations">Réalisations</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#methode">Notre méthode</a></li>
+          <li><a href="index.html#avis">Avis clients</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links">
+          <li><a href="index.html#services">Rénovation complète</a></li>
+          <li><a href="index.html#services">Appartements</a></li>
+          <li><a href="index.html#services">Cuisines</a></li>
+          <li><a href="index.html#services">Salles de bain</a></li>
+          <li><a href="index.html#services">Travaux extérieurs</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.4a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.13.96.33 1.9.62 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.77-1.77a2 2 0 0 1 2.11-.45c.91.29 1.85.5 2.81.62A2 2 0 0 1 22 16.92z"/></svg>
+          <a href="tel:+33601460816">06 01 46 08 16</a>
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:f.brisson@tf-group.fr">f.brisson@tf-group.fr</a>
+        </div>
+        <div class="footer-contact-item">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>Île-de-France &amp;<br>Région parisienne</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 T&amp;F Group. Tous droits réservés.</div>
+      <div class="footer-legal">
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="politique-confidentialite.html">Politique de confidentialité</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
+  }
+
+  function closeMobileNav() {
+    document.getElementById('mobileNav').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+
+</body>
+</html>
