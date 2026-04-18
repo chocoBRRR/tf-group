@@ -374,28 +374,111 @@
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .form-group { margin-bottom: 14px; }
   .form-group label { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite); margin-bottom: 8px; }
-  .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); background: var(--white); font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--graphite); border-radius: 2px; outline: none; transition: border-color 0.25s, box-shadow 0.25s; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,169,106,0.12); }
+  .form-group input, .form-group textarea { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); background: var(--white); font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--graphite); border-radius: 2px; outline: none; transition: border-color 0.25s, box-shadow 0.25s; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,169,106,0.12); }
   .form-group textarea { resize: vertical; min-height: 100px; }
-  .form-select-wrap { position: relative; }
-  .form-select-wrap::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 18px;
-    width: 9px;
-    height: 9px;
+  .form-project-picker { position: relative; }
+  .form-project-picker.is-invalid .form-project-trigger {
+    border-color: #c0392b;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.08);
+  }
+  .form-project-trigger {
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: var(--graphite);
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    text-align: left;
+    cursor: pointer;
+  }
+  .form-project-trigger:hover { border-color: rgba(200,169,106,0.5); }
+  .form-project-trigger:focus-visible,
+  .form-project-picker.is-open .form-project-trigger {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,169,106,0.12);
+  }
+  .form-project-trigger-label {
+    display: block;
+    min-width: 0;
+    line-height: 1.35;
+  }
+  .form-project-trigger-label.is-placeholder { color: var(--text-muted); }
+  .form-project-trigger-icon {
+    width: 10px;
+    height: 10px;
     border-right: 1.5px solid rgba(63,74,60,0.72);
     border-bottom: 1.5px solid rgba(63,74,60,0.72);
-    transform: translateY(-65%) rotate(45deg);
+    transform: rotate(45deg) translateY(-1px);
+    flex-shrink: 0;
+    transition: transform 0.22s ease, border-color 0.22s ease;
+  }
+  .form-project-picker.is-open .form-project-trigger-icon {
+    transform: rotate(-135deg) translate(-2px, -1px);
+    border-color: var(--olive);
+  }
+  .form-project-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    padding: 8px;
+    border: 1.5px solid rgba(63,74,60,0.14);
+    background: rgba(250,250,247,0.98);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 18px 40px rgba(30,30,30,0.08);
+    border-radius: 2px;
+    z-index: 30;
+    opacity: 0;
+    transform: translateY(-6px);
     pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
   }
-  .form-select-wrap select {
-    padding-right: 48px;
+  .form-project-picker.is-open .form-project-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .form-project-options {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 260px;
+    overflow-y: auto;
+  }
+  .form-project-option {
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    background: transparent;
+    border-radius: 2px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.84rem;
+    color: var(--graphite);
+    text-align: left;
     cursor: pointer;
-    background-image: none;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
   }
-  .form-select-wrap select::-ms-expand { display: none; }
+  .form-project-option:hover,
+  .form-project-option:focus-visible {
+    background: rgba(63,74,60,0.06);
+    color: var(--olive);
+    outline: none;
+  }
+  .form-project-option.is-selected {
+    background: rgba(63,74,60,0.08);
+    color: var(--olive);
+    font-weight: 600;
+  }
   .form-group--attachments { margin-top: -2px; margin-bottom: 18px; }
   .form-attach-trigger {
     display: inline-flex;
@@ -1120,18 +1203,23 @@
               <input type="tel" id="phone" name="telephone" placeholder="06 XX XX XX XX">
             </div>
             <div class="form-group">
-              <label>Type de projet *</label>
-              <div class="form-select-wrap">
-                <select id="project" name="type_projet" required>
-                  <option value="">Sélectionnez…</option>
-                  <option>Rénovation complète</option>
-                  <option>Rénovation d'appartement</option>
-                  <option>Cuisine</option>
-                  <option>Salle de bain</option>
-                  <option>Aménagement intérieur</option>
-                  <option>Travaux extérieurs</option>
-                  <option>Autre</option>
-                </select>
+              <label id="projectLabel">Type de projet *</label>
+              <div class="form-project-picker" id="projectPicker">
+                <input type="hidden" id="project" name="type_projet" value="">
+                <button type="button" class="form-project-trigger" id="projectTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="projectLabel projectTriggerValue">
+                  <span class="form-project-trigger-label is-placeholder" id="projectTriggerValue">Sélectionnez…</span>
+                  <span class="form-project-trigger-icon" aria-hidden="true"></span>
+                </button>
+                <div class="form-project-menu" id="projectMenu" role="listbox" aria-labelledby="projectLabel">
+                  <div class="form-project-options">
+                    <button type="button" class="form-project-option" data-project-option="Rénovation complète" role="option" aria-selected="false">Rénovation complète</button>
+                    <button type="button" class="form-project-option" data-project-option="Cuisine" role="option" aria-selected="false">Cuisine</button>
+                    <button type="button" class="form-project-option" data-project-option="Salle de bain" role="option" aria-selected="false">Salle de bain</button>
+                    <button type="button" class="form-project-option" data-project-option="Aménagement intérieur" role="option" aria-selected="false">Aménagement intérieur</button>
+                    <button type="button" class="form-project-option" data-project-option="Travaux extérieurs" role="option" aria-selected="false">Travaux extérieurs</button>
+                    <button type="button" class="form-project-option" data-project-option="Autre" role="option" aria-selected="false">Autre</button>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-group">
@@ -1329,6 +1417,12 @@
   const formError = document.getElementById('formError');
   const submitButton = document.getElementById('submitButton');
   const attachTrigger = document.getElementById('attachTrigger');
+  const projectInput = document.getElementById('project');
+  const projectPicker = document.getElementById('projectPicker');
+  const projectTrigger = document.getElementById('projectTrigger');
+  const projectTriggerValue = document.getElementById('projectTriggerValue');
+  const projectMenu = document.getElementById('projectMenu');
+  const projectOptions = Array.from(document.querySelectorAll('[data-project-option]'));
   const photoUpload = document.getElementById('photo-upload');
   const photoPreview = document.getElementById('photoPreview');
   const photoCount = document.getElementById('photoCount');
@@ -1354,17 +1448,82 @@
     formError.classList.remove('visible');
   }
 
-  function clearFieldError(element) {
+  function getFieldErrorTarget(target) {
+    if (!target) return null;
+    if (typeof target === 'string' && target === 'project') return projectPicker;
+    if (target === projectInput) return projectPicker;
+    return typeof target === 'string' ? document.getElementById(target) : target;
+  }
+
+  function clearFieldError(target) {
+    const element = getFieldErrorTarget(target);
+    if (!element) return;
+    if (element === projectPicker) {
+      element.classList.remove('is-invalid');
+      element.style.animation = '';
+      return;
+    }
     element.style.borderColor = '';
     element.style.animation = '';
   }
 
-  function markFieldError(element) {
+  function markFieldError(target) {
+    const element = getFieldErrorTarget(target);
+    if (!element) return;
+    if (element === projectPicker) {
+      element.classList.add('is-invalid');
+      element.style.animation = 'shake 0.3s';
+      setTimeout(() => {
+        element.style.animation = '';
+      }, 400);
+      return;
+    }
     element.style.borderColor = '#c0392b';
     element.style.animation = 'shake 0.3s';
     setTimeout(() => {
       element.style.animation = '';
     }, 400);
+  }
+
+  function updateProjectPicker() {
+    const selectedValue = projectInput.value;
+    projectTriggerValue.textContent = selectedValue || 'Sélectionnez…';
+    projectTriggerValue.classList.toggle('is-placeholder', !selectedValue);
+    projectOptions.forEach(option => {
+      const isSelected = option.dataset.projectOption === selectedValue;
+      option.classList.toggle('is-selected', isSelected);
+      option.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+    });
+  }
+
+  function openProjectMenu(focusSelected = true) {
+    projectPicker.classList.add('is-open');
+    projectTrigger.setAttribute('aria-expanded', 'true');
+    if (!focusSelected) return;
+    const selectedOption = projectOptions.find(option => option.dataset.projectOption === projectInput.value) || projectOptions[0];
+    requestAnimationFrame(() => selectedOption.focus());
+  }
+
+  function closeProjectMenu(focusTrigger = false) {
+    projectPicker.classList.remove('is-open');
+    projectTrigger.setAttribute('aria-expanded', 'false');
+    if (focusTrigger) projectTrigger.focus();
+  }
+
+  function setProjectValue(value) {
+    projectInput.value = value;
+    clearFieldError('project');
+    if (formError.classList.contains('visible')) {
+      clearFormError();
+    }
+    updateProjectPicker();
+  }
+
+  function moveProjectFocus(step) {
+    const currentIndex = projectOptions.indexOf(document.activeElement);
+    const baseIndex = currentIndex >= 0 ? currentIndex : Math.max(projectOptions.findIndex(option => option.dataset.projectOption === projectInput.value), 0);
+    const nextIndex = (baseIndex + step + projectOptions.length) % projectOptions.length;
+    projectOptions[nextIndex].focus();
   }
 
   function updatePhotoCount() {
@@ -1446,6 +1605,55 @@
     submitButton.firstChild.textContent = isPending ? 'Envoi en cours' : 'Demander mon estimation';
   }
 
+  projectTrigger.addEventListener('click', () => {
+    if (projectPicker.classList.contains('is-open')) {
+      closeProjectMenu();
+    } else {
+      openProjectMenu();
+    }
+  });
+
+  projectTrigger.addEventListener('keydown', event => {
+    if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openProjectMenu();
+    }
+    if (event.key === 'Escape') {
+      closeProjectMenu();
+    }
+  });
+
+  projectMenu.addEventListener('click', event => {
+    const option = event.target.closest('[data-project-option]');
+    if (!option) return;
+    setProjectValue(option.dataset.projectOption);
+    closeProjectMenu(true);
+  });
+
+  projectMenu.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeProjectMenu(true);
+    }
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      moveProjectFocus(1);
+    }
+    if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      moveProjectFocus(-1);
+    }
+    if (event.key === 'Tab') {
+      closeProjectMenu();
+    }
+  });
+
+  document.addEventListener('click', event => {
+    if (!projectPicker.contains(event.target)) {
+      closeProjectMenu();
+    }
+  });
+
   attachTrigger.addEventListener('click', () => photoUpload.click());
 
   photoUpload.addEventListener('change', event => {
@@ -1474,7 +1682,7 @@
     removePhoto(Number(button.dataset.removePhoto));
   });
 
-  ['fname', 'lname', 'email', 'project'].forEach(id => {
+  ['fname', 'lname', 'email'].forEach(id => {
     document.getElementById(id).addEventListener('input', event => {
       clearFieldError(event.target);
       if (formError.classList.contains('visible')) {
@@ -1489,6 +1697,7 @@
     });
   });
 
+  updateProjectPicker();
   updatePhotoCount();
 
   // REVEAL ON SCROLL
@@ -1522,7 +1731,7 @@
     const lname = document.getElementById('lname').value.trim();
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
-    const project = document.getElementById('project').value;
+    const project = projectInput.value;
     const desc = document.getElementById('desc').value.trim();
     const budget = getBudgetValue();
     const requiredFieldIds = [fname ? null : 'fname', lname ? null : 'lname', email ? null : 'email', project ? null : 'project'].filter(Boolean);
