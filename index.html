@@ -26,7 +26,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" href="Copie%20de%20LOGO_FAVICON.png">
+<link rel="icon" href="favicon-tf.png">
 <link rel="preload" as="image" href="hero-tf.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -638,9 +638,31 @@
   .budget-opt { display: none; }
   .budget-label { display: block; text-align: center; padding: 10px 8px; border: 1.5px solid var(--border); border-radius: 2px; cursor: pointer; font-size: 0.72rem; font-weight: 600; color: var(--text-muted); transition: all 0.2s; }
   .budget-opt:checked + .budget-label { border-color: var(--olive); color: var(--olive); background: rgba(63,74,60,0.05); }
-  .form-success { display: none; text-align: center; padding: 24px 0; }
+  .form-success { display: none; text-align: center; padding: 24px 0; max-width: 620px; margin: 0 auto; }
   .form-success-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(63,74,60,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
   .form-success-icon svg { width: 28px; height: 28px; stroke: var(--olive); fill: none; stroke-width: 1.5; }
+  .form-success-copy { margin-top: 10px; font-size: 0.95rem; line-height: 1.8; color: var(--text-muted); }
+  .form-success-link {
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--olive);
+    cursor: pointer;
+    border-bottom: 1px solid rgba(63,74,60,0.22);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .form-success-link:hover {
+    color: var(--graphite);
+    border-color: rgba(30,30,30,0.35);
+  }
 
   /* ─── FAQ ─── */
   #faq { background: var(--beige); }
@@ -1202,7 +1224,7 @@
 <!-- NAV -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
-    <img src="Copie%20de%20LOGO_PNG_NOIR.PNG" alt="T&amp;F Rénovation">
+    <img src="logo-tf-noir.png" alt="T&amp;F">
   </a>
   <ul class="nav-links">
     <li><a href="#about">L'entreprise</a></li>
@@ -1316,7 +1338,7 @@
       <!-- Théo -->
       <div class="founder-col reveal reveal-delay-2">
         <div class="founder-photo-frame">
-          <img class="founder-photo founder-photo--theo" src="photo-theo-circle.jpg" alt="Théo D." loading="lazy">
+          <img class="founder-photo founder-photo--theo" src="photo-theo.jpg" alt="Théo D." loading="lazy">
         </div>
         <div class="founder-name">Théo D.</div>
         <div class="founder-role">Direction d'exploitation</div>
@@ -1696,8 +1718,9 @@
           </form>
           <div class="form-success" id="formSuccess">
             <div class="form-success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-            <h3 class="form-title">Demande envoyée !</h3>
-            <p style="font-size:0.9rem;margin-top:8px">Une première estimation peut vous être transmise sous <strong>48 heures</strong>.<br>Après visite, le devis détaillé suit sous <strong>48 heures</strong>.</p>
+            <h3 class="form-title">Demande bien reçue</h3>
+            <p class="form-success-copy">Nous revenons vers vous rapidement pour faire un premier point sur votre projet.</p>
+            <button type="button" class="form-success-link" id="resetFormButton">Envoyer une autre demande</button>
           </div>
         </div>
       </div>
@@ -1780,7 +1803,7 @@
       <div>
         <div class="footer-brand">
           <div class="footer-logo">
-            <img src="Copie%20de%20LOGO_PNG_BLANC.PNG" alt="T&amp;F Group">
+            <img src="logo-tf-blanc.png" alt="T&amp;F">
           </div>
           <p class="footer-desc">T&amp;F - Entreprise de conception et réalisation tous corps d'état.<br>Rigueur, transparence et suivi personnalisé au service de votre projet.</p>
         </div>
@@ -1872,6 +1895,7 @@
   const photoUpload = document.getElementById('photo-upload');
   const photoPreview = document.getElementById('photoPreview');
   const photoCount = document.getElementById('photoCount');
+  const resetFormButton = document.getElementById('resetFormButton');
   let selectedFiles = [];
 
   function escapeHtml(value) {
@@ -2051,6 +2075,30 @@
     submitButton.firstChild.textContent = isPending ? 'Envoi en cours' : 'Demander mon estimation';
   }
 
+  function resetContactFormState() {
+    contactForm.reset();
+    selectedFiles = [];
+    photoUpload.value = '';
+    renderPhotoPreview();
+    clearFormError();
+    ['fname', 'lname', 'email', 'phone', 'desc', 'project'].forEach(id => clearFieldError(id));
+    closeProjectMenu();
+    updateProjectPicker();
+  }
+
+  function showContactForm() {
+    formSuccess.style.display = 'none';
+    formWrapper.style.display = 'block';
+    const firstField = document.getElementById('fname');
+    if (firstField) firstField.focus({ preventScroll: true });
+  }
+
+  function showFormSuccessState() {
+    resetContactFormState();
+    formWrapper.style.display = 'none';
+    formSuccess.style.display = 'block';
+  }
+
   projectTrigger.addEventListener('click', () => {
     if (projectPicker.classList.contains('is-open')) {
       closeProjectMenu();
@@ -2127,6 +2175,8 @@
     if (!button) return;
     removePhoto(Number(button.dataset.removePhoto));
   });
+
+  resetFormButton.addEventListener('click', showContactForm);
 
   ['fname', 'lname', 'email'].forEach(id => {
     document.getElementById(id).addEventListener('input', event => {
@@ -2226,8 +2276,7 @@
         throw new Error(`HTTP ${response.status}`);
       }
 
-      formWrapper.style.display = 'none';
-      formSuccess.style.display = 'block';
+      showFormSuccessState();
     } catch (error) {
       console.error('Erreur lors de l’envoi du formulaire :', error);
       showFormError('L’envoi a échoué. Vous pouvez réessayer dans un instant ou nous appeler directement.');
