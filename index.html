@@ -3,8 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>T&amp;F — Travaux, rénovation &amp; aménagement</title>
+<title>T&amp;F - Conception et réalisation tous corps d'état en Île-de-France</title>
+<meta name="description" content="T&amp;F accompagne vos projets de conception-réalisation, rénovation et aménagement, avec rigueur, transparence et suivi personnalisé.">
+<link rel="canonical" href="https://tf-group.fr/">
+<meta property="og:title" content="T&amp;F - Conception et réalisation tous corps d'état en Île-de-France">
+<meta property="og:description" content="T&amp;F accompagne vos projets de conception-réalisation, rénovation et aménagement, avec rigueur, transparence et suivi personnalisé.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tf-group.fr/">
+<meta property="og:site_name" content="T&amp;F">
+<meta property="og:image" content="https://tf-group.fr/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="T&amp;F - Conception et réalisation tous corps d'état en Île-de-France">
+<meta name="twitter:description" content="T&amp;F accompagne vos projets de conception-réalisation, rénovation et aménagement, avec rigueur, transparence et suivi personnalisé.">
+<meta name="twitter:image" content="https://tf-group.fr/og-image.jpg">
 <link rel="icon" href="Copie%20de%20LOGO_FAVICON.png">
+<link rel="preload" as="image" href="hero-tf.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -158,10 +174,12 @@
   .hero-bg {
     position: absolute; inset: 0;
     background: linear-gradient(to bottom, rgba(30,30,30,0.15) 0%, rgba(30,30,30,0.7) 100%),
-      url('https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1800&q=85') center/cover no-repeat;
-    transform: scale(1.05); transition: transform 8s ease-out;
+      url('hero-tf.jpg') center/cover no-repeat;
+    opacity: 0;
+    transform: scale(1.03);
+    transition: opacity 0.55s ease, transform 8s ease-out;
   }
-  #hero.loaded .hero-bg { transform: scale(1); }
+  #hero.loaded .hero-bg { opacity: 1; transform: scale(1); }
   .hero-content { position: relative; z-index: 2; width: 100%; padding: 0 60px 100px; }
   .hero-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,250,247,0.75); margin-bottom: 24px; display: flex; align-items: center; gap: 14px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.55s 0.12s forwards; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
   .hero-label::before { content:''; width:40px; height:1px; background:var(--gold); display:block; }
@@ -200,8 +218,13 @@
   .founder-photo-frame { width: 176px; height: 176px; border-radius: 50%; overflow: hidden; border: 3px solid var(--beige-dark); margin: 0 auto 18px; transition: border-color 0.3s; }
   .founder-col:hover .founder-photo-frame { border-color: var(--gold); }
   .founder-photo { width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: center top; transition: filter 0.3s ease, transform 0.3s ease; }
-  .founder-photo--flavien { object-position: 56% 6%; filter: brightness(1.02) contrast(1.02) saturate(0.97); transform: scale(1.08); }
-  .founder-photo--theo { object-position: center center; transform-origin: center center; filter: brightness(0.94) contrast(0.98) saturate(0.92); transform: translate(4px, 10px) scale(1.14); }
+  .founder-photo--flavien { object-position: 56% 6%; filter: brightness(1.02) contrast(1.02) saturate(0.97); transform: translate(3px, -7px) scale(1.2); }
+  .founder-photo--theo {
+    object-position: 54% 38%;
+    transform-origin: center center;
+    filter: brightness(0.94) contrast(0.98) saturate(0.92);
+    transform: translateX(4px) scale(1.16);
+  }
   .founder-name { font-family: 'Playfair Display', serif; font-size: 1.16rem; font-weight: 600; color: var(--graphite); margin-bottom: 10px; }
   .founder-role { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.11em; color: var(--gold); line-height: 1.2; margin-bottom: 7px; white-space: nowrap; }
   .founder-years { font-size: 0.75rem; line-height: 1.2; color: rgba(99, 94, 86, 0.72); white-space: nowrap; }
@@ -211,8 +234,6 @@
   .about-center .section-title em { display: block; white-space: nowrap; }
   .about-intro { width: 100%; text-align: center; font-size: 0.98rem; line-height: 1.88; color: rgba(42, 42, 42, 0.84); font-weight: 300; margin-bottom: 26px; max-width: 620px; margin-left: auto; margin-right: auto; }
   .about-intro:last-child { margin-bottom: 0; }
-
-
   /* ─── REALIZATIONS ─── */
   #realizations { background: var(--beige); }
   .realiz-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; }
@@ -641,11 +662,52 @@
     outline: 2px solid rgba(200,169,106,0.7);
     outline-offset: 6px;
   }
-  .faq-icon { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; font-size: 1rem; color: var(--gold); font-weight: 300; line-height: 1; }
-  .faq-item.open .faq-icon { background: var(--olive); border-color: var(--olive); color: var(--white); transform: rotate(45deg); }
+  .faq-icon {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    font-size: 1rem;
+    color: transparent;
+    font-weight: 300;
+    line-height: 1;
+  }
+  .faq-icon::before {
+    content: '+';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .faq-item.open .faq-icon { border-color: rgba(200,169,106,0.78); }
+  .faq-item.open .faq-icon::before { content: '−'; color: var(--gold); }
   .faq-a { overflow: hidden; max-height: 0; transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.4s; }
-  .faq-a p { padding-bottom: 24px; font-size: 0.88rem; line-height: 1.9; }
-  .faq-item.open .faq-a { max-height: 400px; }
+  .faq-a p { padding-bottom: 0; font-size: 0.88rem; line-height: 1.9; }
+  .faq-a p + p { margin-top: 12px; }
+  .faq-a p:last-child { padding-bottom: 24px; }
+  .faq-item.open .faq-a { max-height: 560px; }
+  .faq-outro {
+    margin-top: 22px;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+  .faq-contact-link {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .faq-contact-link:hover { color: var(--gold-light); }
 
   /* ─── FINAL CTA ─── */
   #final-cta { background: var(--graphite); text-align: center; padding: 108px 60px 92px; position: relative; overflow: hidden; }
@@ -686,6 +748,15 @@
   .footer-contact-item svg { width: 13px; height: 13px; stroke: var(--gold); fill: none; stroke-width: 1.5; margin-top: 2px; flex-shrink: 0; }
   .footer-contact-item a, .footer-contact-item span { font-size: 0.78rem; color: rgba(250,250,247,0.5); line-height: 1.58; text-decoration: none; transition: color 0.2s; }
   .footer-contact-item a:hover { color: var(--gold); }
+  .footer-email-link {
+    color: var(--gold) !important;
+    border-bottom: 1px solid rgba(200,169,106,0.45);
+    overflow-wrap: anywhere;
+  }
+  .footer-email-link:hover {
+    color: var(--gold-light) !important;
+    border-color: rgba(223,192,138,0.7);
+  }
   .footer-bottom { border-top: 1px solid rgba(250,250,247,0.06); padding-top: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
   .footer-copy { font-size: 0.68rem; color: rgba(250,250,247,0.25); }
   .footer-legal { display: flex; gap: 24px; }
@@ -708,33 +779,326 @@
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   }
   @media (max-width: 900px) {
-    nav { padding: 0 28px; height: 80px; }
-    nav.scrolled { padding: 0 20px; height: 66px; }
-    .nav-logo { margin-left: 0; }
-    .nav-logo img { height: 72px; }
-    nav.scrolled .nav-logo img { height: 58px; }
+    nav {
+      padding: 0 20px;
+      height: 74px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+    nav.scrolled {
+      padding: 0 16px 0 20px;
+      height: 62px;
+    }
+    .nav-logo {
+      margin-left: 0;
+      justify-self: start;
+    }
+    .nav-logo img { height: 68px; }
+    nav.scrolled .nav-logo img { height: 54px; }
     .nav-links { display: none; }
     .nav-cta { display: none; }
-    .nav-burger { display: flex; }
-    .hero-content { padding: 0 28px 100px; }
+    .nav-burger {
+      display: flex;
+      justify-self: end;
+      order: 2;
+    }
+    #hero {
+      height: auto;
+      min-height: 560px;
+      align-items: flex-start;
+    }
+    .hero-bg { background-position: center 28%; }
+    .hero-content {
+      min-height: 560px;
+      padding: 108px 24px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .hero-label {
+      margin-bottom: 18px;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      gap: 11px;
+      line-height: 1.1;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+    }
+    .hero-label::before { width: 28px; flex: 0 0 28px; }
+    .hero-h1 {
+      max-width: 10ch;
+      margin-bottom: 18px;
+      font-size: clamp(2.45rem, 12vw, 4.2rem);
+      line-height: 1.03;
+    }
+    .hero-sub {
+      max-width: 33ch;
+      margin-bottom: 28px;
+      font-size: 0.94rem;
+      line-height: 1.75;
+      display: none;
+    }
+    .hero-btns {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .hero-btns .btn {
+      width: auto;
+      max-width: 100%;
+      padding: 15px 22px;
+    }
 
-    .about-trio { grid-template-columns: 1fr; gap: 40px; }
-    .founder-col { width: 100%; padding-top: 0; }
-    .about-center { order: -1; margin-top: 0; }
-    .services-grid { grid-template-columns: 1fr; }
-    .avis-grid { grid-template-columns: 1fr; }
+    .about-trio {
+      grid-template-columns: 1fr 1fr;
+      gap: 24px 14px;
+      align-items: stretch;
+    }
+    .founder-col {
+      width: 100%;
+      padding: 0 10px;
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      align-items: center;
+      text-align: center;
+    }
+    .founder-photo-frame {
+      width: 104px;
+      height: 104px;
+      margin: 0 auto 14px;
+    }
+    .founder-name { font-size: 1.02rem; margin-bottom: 8px; }
+    .founder-role { white-space: normal; margin-bottom: 6px; }
+    .founder-years { white-space: normal; }
+    .about-center {
+      grid-column: 1 / -1;
+      order: -1;
+      margin-top: 0;
+      align-items: flex-start;
+      text-align: left;
+      max-width: 42ch;
+    }
+    .about-center .label { justify-content: flex-start; }
+    .about-center .section-title {
+      margin-bottom: 24px;
+      font-size: clamp(2rem, 9vw, 3.1rem);
+    }
+    .about-center .section-title em { white-space: normal; }
+    .about-intro {
+      text-align: left;
+      font-size: 0.96rem;
+      line-height: 1.82;
+      margin-bottom: 18px;
+      max-width: 40ch;
+    }
+    .about-center { padding-bottom: 18px; }
+    .services-header,
+    .realiz-header {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .realiz-header { flex-direction: column; align-items: center; gap: 14px; }
+    .realiz-header > div,
+    .services-intro { width: 100%; }
+    .realiz-header .label,
+    .services-intro .label,
+    #avis .label,
+    .faq-grid > div:first-child .label { justify-content: center; }
+    .services-intro .section-subtitle {
+      margin: 0 auto;
+      max-width: 34ch;
+      font-size: 0.94rem;
+      line-height: 1.72;
+      display: none;
+    }
+
+    .ba-grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(78vw, 1fr);
+      gap: 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-snap-type: x proximity;
+      margin-left: -12px;
+      margin-right: -24px;
+      padding: 0 24px 6px 0;
+    }
+    .ba-grid::-webkit-scrollbar { display: none; }
+    .ba-slider-card {
+      border: 1px solid var(--border);
+      scroll-snap-align: start;
+    }
+    .ba-slider-wrap { aspect-ratio: 1 / 0.94; }
+    .ba-footer { padding: 16px 16px 18px; }
+    .ba-footer-badge { font-size: 0.56rem; letter-spacing: 0.12em; }
+    .ba-footer-title { font-size: 0.84rem; line-height: 1.42; }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      background: transparent;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .service-card {
+      min-height: 0;
+      padding: 28px 24px 24px;
+      border: 1px solid var(--border);
+    }
+    .service-head {
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .service-title {
+      max-width: none;
+      font-size: 1.08rem;
+      line-height: 1.2;
+    }
+    .service-num {
+      font-size: 2.05rem;
+      top: -4px;
+      color: rgba(200,169,106,0.46);
+    }
+    .service-desc {
+      font-size: 0.84rem;
+      line-height: 1.72;
+      display: block;
+      overflow: visible;
+    }
+
+    #avis .container > div:first-child {
+      margin-bottom: 22px !important;
+      text-align: center;
+    }
+    .avis-grid {
+      display: flex;
+      align-items: stretch;
+      overflow-x: auto;
+      overflow-y: visible;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+      scroll-padding-left: 0;
+      margin-right: -24px;
+      padding: 0 24px 6px 0;
+      max-width: none;
+      gap: 18px;
+    }
+    .avis-grid::-webkit-scrollbar { display: none; }
+    .avis-card {
+      flex: 0 0 calc(100% - 72px);
+      max-width: 540px;
+      scroll-snap-align: start;
+      display: grid;
+      grid-template-rows: minmax(34px, auto) 1fr auto;
+      row-gap: 12px;
+      min-height: 332px;
+      padding: 38px 34px;
+      border-radius: 0;
+      border-color: var(--border);
+      background: var(--white);
+      box-shadow: none;
+    }
+    .avis-title {
+      font-size: 1.14rem;
+      line-height: 1.2;
+      margin-bottom: 0;
+    }
+    .avis-text {
+      font-size: 0.88rem;
+      line-height: 1.82;
+      display: block;
+      overflow: visible;
+    }
+    .avis-author {
+      gap: 14px;
+      margin-top: 0;
+      padding-top: 0;
+      align-self: end;
+      justify-self: start;
+    }
+    .avis-avatar {
+      width: 42px;
+      height: 42px;
+      font-size: 0.98rem;
+    }
+    .avis-name { font-size: 0.84rem; }
+    .avis-location,
+    .avis-project { font-size: 0.68rem; }
+    #avis.section-pad {
+      padding-top: 58px;
+      padding-bottom: 58px;
+    }
+
     .projet-grid { grid-template-columns: 1fr; gap: 48px; }
-    .faq-grid { grid-template-columns: 1fr; gap: 48px; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .footer-grid > div:first-child { display: block; }
-    .footer-brand { flex-direction: column; align-items: flex-start; width: 100%; gap: 16px; }
-    .ba-grid { grid-template-columns: 1fr; }
-    .realiz-header { flex-direction: column; align-items: flex-start; gap: 20px; }
-    .services-header { margin-bottom: 34px; }
     .form-row { grid-template-columns: 1fr; }
     .form-attach-trigger { width: 100%; }
+    .faq-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .faq-grid > div:first-child {
+      text-align: center;
+      max-width: 34ch;
+      margin: 0 auto;
+    }
+    .faq-outro {
+      margin-top: 28px;
+      font-size: 0.82rem;
+    }
 
-    .section-pad { padding: 80px 0; }
+    .footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 18px;
+    }
+    .footer-grid > div:first-child,
+    .footer-grid > div:last-child { grid-column: 1 / -1; }
+    .footer-grid > div:nth-child(2) .footer-links,
+    .footer-grid > div:nth-child(3) .footer-links {
+      align-items: flex-start;
+    }
+    .footer-brand {
+      flex-direction: row;
+      align-items: flex-start;
+      width: 100%;
+      gap: 14px;
+    }
+    .footer-logo img { height: 54px; }
+    .footer-desc { max-width: 34ch; }
+    .footer-grid > div:last-child {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 8px 18px;
+      align-items: start;
+      justify-items: start;
+    }
+    .footer-grid > div:last-child .footer-col-title {
+      grid-column: 1 / -1;
+      margin-bottom: 4px;
+    }
+    .footer-grid > div:last-child .footer-contact-item {
+      margin-bottom: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      justify-content: flex-start;
+      text-align: left;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .footer-legal { gap: 16px; flex-wrap: wrap; }
+
+    .section-pad { padding: 72px 0; }
+    #about { padding: 44px 0 68px; }
     #methode { padding: 76px 0 72px; }
     .container { padding: 0 24px; }
     #final-cta { padding: 84px 24px 72px; }
@@ -742,9 +1106,68 @@
     .methode-promise-card { max-width: 100%; }
   }
   @media (max-width: 600px) {
-    .hero-btns { flex-direction: column; }
-    .final-btns { flex-direction: column; align-items: center; }
-    .budget-options { grid-template-columns: 1fr 1fr; }
+    nav { padding: 0 16px; }
+    nav.scrolled { padding: 0 14px 0 16px; }
+    .container { padding: 0 18px; }
+    .hero-content { padding: 98px 18px 34px; min-height: 520px; }
+    #hero { min-height: 520px; }
+    .hero-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      gap: 9px;
+    }
+    .hero-label::before { width: 20px; flex: 0 0 20px; }
+    .hero-h1 { font-size: clamp(2.2rem, 11vw, 3.35rem); }
+    .hero-sub { margin-bottom: 22px; }
+    .hero-btns .btn { padding: 14px 18px; font-size: 0.72rem; }
+    .final-btns { gap: 12px; }
+    .budget-options { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+    .budget-label {
+      padding: 10px 4px;
+      font-size: 0.66rem;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+    .founder-photo-frame { width: 96px; height: 96px; }
+    .about-trio { gap: 14px 10px; }
+    .avis-grid {
+      gap: 10px;
+    }
+    .ba-grid {
+      grid-auto-columns: minmax(86vw, 1fr);
+      margin-left: -10px;
+      margin-right: -18px;
+      padding-right: 18px;
+      gap: 12px;
+    }
+    .ba-slider-wrap { aspect-ratio: 1 / 1.02; }
+    .ba-footer { padding: 14px 14px 16px; }
+    .ba-footer-title { font-size: 0.8rem; line-height: 1.38; }
+    .services-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .service-card { padding: 22px 18px 20px; }
+    .service-title { font-size: 1rem; }
+    .service-num { font-size: 1.8rem; }
+    .service-desc { font-size: 0.8rem; line-height: 1.68; }
+    .avis-grid {
+      margin-right: -18px;
+      padding-right: 18px;
+      max-width: none;
+      gap: 12px;
+    }
+    .footer-contact-item { gap: 10px; }
+    .service-card { min-height: 0; }
+    .avis-card {
+      flex-basis: calc(100% - 32px);
+      max-width: none;
+      min-height: 312px;
+      padding: 30px 22px;
+      row-gap: 12px;
+    }
+    .avis-title { font-size: 1.04rem; line-height: 1.18; }
+    .avis-text { font-size: 0.84rem; line-height: 1.76; }
     .footer-bottom { flex-direction: column; }
   }
 
@@ -795,7 +1218,7 @@
       <em>bien piloté</em><br>
       jusqu’au bout.
     </h1>
-        <p class="hero-sub">Avec T&amp;F, vos idées se structurent clairement dès les premiers échanges, avancent avec méthode, et les décisions importantes se prennent avec vous jusqu’à la livraison.</p>
+        <p class="hero-sub">Avec T&amp;F, vos idées se structurent clairement dès les premiers échanges, prennent forme méthodiquement, et les décisions importantes se prennent avec vous jusqu’à la livraison.</p>
     <div class="hero-btns">
       <a href="#projet" class="btn btn-gold">
         Parlons de votre projet
@@ -866,7 +1289,7 @@
       <!-- Flavien -->
       <div class="founder-col reveal">
         <div class="founder-photo-frame">
-          <img class="founder-photo founder-photo--flavien" src="photo%20flavien.png" alt="Flavien B." loading="lazy">
+          <img class="founder-photo founder-photo--flavien" src="photo-flavien.jpg" alt="Flavien B." loading="lazy">
         </div>
         <div class="founder-name">Flavien B.</div>
         <div class="founder-role">Direction commerciale</div>
@@ -884,7 +1307,7 @@
       <!-- Théo -->
       <div class="founder-col reveal reveal-delay-2">
         <div class="founder-photo-frame">
-          <img class="founder-photo founder-photo--theo" src="photo%20theo.png" alt="Théo D." loading="lazy">
+          <img class="founder-photo founder-photo--theo" src="photo-theo-circle.jpg" alt="Théo D." loading="lazy">
         </div>
         <div class="founder-name">Théo D.</div>
         <div class="founder-role">Direction d'exploitation</div>
@@ -1280,36 +1703,46 @@
       <div>
         <div class="label reveal">FAQ</div>
         <h2 class="section-title reveal reveal-delay-1">Questions<br><em class="italic gold">fréquentes.</em></h2>
-        <p class="reveal reveal-delay-2" style="font-size:0.88rem;margin-top:20px">Une autre question ?<br>Contactez-nous directement.</p>
-        <a href="tel:+33601460816" class="btn btn-outline reveal reveal-delay-3" style="margin-top:28px">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.4a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.13.96.33 1.9.62 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.77-1.77a2 2 0 0 1 2.11-.45c.91.29 1.85.5 2.81.62A2 2 0 0 1 22 16.92z"/></svg>
-          Nous appeler
-        </a>
+        <p class="faq-outro reveal reveal-delay-2">Une autre question ? <a class="faq-contact-link" href="mailto:f.brisson@tf-group.fr?subject=Prise%20de%20contact%20-%20site%20TF%20Group">Écrivez-nous.</a></p>
       </div>
       <div class="faq-list reveal reveal-delay-2">
         <div class="faq-item">
           <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-1" onclick="toggleFaq(this)">Dans quels délais puis-je avoir un devis ?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" id="faq-a-1" aria-hidden="true"><p>Après la visite sur site, vous recevez un devis détaillé sous 48 heures ouvrées. Il reprend les postes prévus, les points techniques identifiés et un planning prévisionnel.</p></div>
+          <div class="faq-a" id="faq-a-1" aria-hidden="true">
+            <p>Après la visite sur site, vous recevez un devis détaillé sous 48 heures ouvrées.</p>
+            <p>Il reprend les postes prévus, les points techniques identifiés et un planning prévisionnel.</p>
+          </div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-2" onclick="toggleFaq(this)">Intervenez-vous sur toute l'Île-de-France ?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" id="faq-a-2" aria-hidden="true"><p>Nous intervenons principalement sur Paris et la petite couronne (92, 93, 94), ainsi que dans les Yvelines et l'Essonne. Pour des projets de grande envergure, nous pouvons nous déplacer plus loin. Contactez-nous pour en discuter.</p></div>
+          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-2" onclick="toggleFaq(this)">Êtes-vous couverts par une assurance décennale ?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" id="faq-a-2" aria-hidden="true">
+            <p>Oui.</p>
+            <p>T&amp;F dispose d'une assurance décennale et d'une assurance responsabilité civile professionnelle en cours de validité.</p>
+            <p>Les attestations peuvent vous être remises si vous le désirez.</p>
+          </div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-3" onclick="toggleFaq(this)">Êtes-vous couverts par une assurance décennale ?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" id="faq-a-3" aria-hidden="true"><p>Oui. T&amp;F dispose d'une assurance décennale et d'une assurance responsabilité civile professionnelle en cours de validité. Les attestations peuvent vous être remises si vous le désirez</p></div>
+          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-3" onclick="toggleFaq(this)">Puis-je rester dans mon logement pendant les travaux ?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" id="faq-a-3" aria-hidden="true">
+            <p>Cela dépend de l'ampleur des travaux.</p>
+            <p>Pour une rénovation partielle, comme une cuisine ou une salle de bain, il est souvent possible de maintenir l'occupation.</p>
+            <p>Pour une rénovation totale, nous vous conseillons de prévoir un hébergement temporaire.</p>
+          </div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-4" onclick="toggleFaq(this)">Puis-je rester dans mon logement pendant les travaux ?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" id="faq-a-4" aria-hidden="true"><p>Cela dépend de l'ampleur des travaux. Pour une rénovation partielle (cuisine ou salle de bain), il est souvent possible de maintenir l'occupation. Pour une rénovation totale, nous vous conseillons de prévoir un hébergement temporaire.</p></div>
+          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-4" onclick="toggleFaq(this)">Comment se passe le suivi de chantier ?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" id="faq-a-4" aria-hidden="true">
+            <p>Vous recevez un point d’avancement régulier avec photos.</p>
+            <p>Si une décision ou un ajustement est nécessaire, nous vous l’expliquons clairement et confirmons ensemble avant d’avancer.</p>
+          </div>
         </div>
         <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-5" onclick="toggleFaq(this)">Comment se passe le suivi de chantier ?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" id="faq-a-5" aria-hidden="true"><p>Vous recevez un point d’avancement régulier avec photos. Si une décision ou un ajustement est nécessaire, nous vous l’expliquons clairement et confirmons ensemble avant d’avancer. Flavien reste votre point d’entrée projet, Théo tient le chantier sur le terrain.</p></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-6" onclick="toggleFaq(this)">Le prix du devis peut-il évoluer ?<span class="faq-icon" aria-hidden="true">+</span></button>
-          <div class="faq-a" id="faq-a-6" aria-hidden="true"><p>Nous établissons un devis détaillé après visite sur site. Si le chantier révèle des contraintes imprévues (murs porteurs, réseaux cachés…), nous vous en informons immédiatement et vous soumettons un avenant chiffré avant toute intervention supplémentaire. Vous décidez toujours.</p></div>
+          <button class="faq-q" type="button" aria-expanded="false" aria-controls="faq-a-5" onclick="toggleFaq(this)">Le prix du devis peut-il évoluer ?<span class="faq-icon" aria-hidden="true">+</span></button>
+          <div class="faq-a" id="faq-a-5" aria-hidden="true">
+            <p>Nous établissons un devis détaillé après visite sur site.</p>
+            <p>Si le chantier révèle des contraintes imprévues, comme des réseaux cachés ou une modification du projet, nous vous en informons immédiatement et vous soumettons un avenant chiffré avant toute intervention supplémentaire.</p>
+            <p>Vous décidez toujours.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1326,7 +1759,7 @@
       Parlons de votre projet
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
-    <a href="tel:+33601460816" class="btn btn-outline-white">Nous appeler directement</a>
+    <a href="mailto:f.brisson@tf-group.fr?subject=Prise%20de%20contact%20-%20site%20TF%20Group" class="btn btn-outline-white">Nous écrire directement</a>
   </div>
   <p class="final-note reveal reveal-delay-4">Quelques éléments suffisent pour démarrer.</p>
 </section>
@@ -1340,7 +1773,7 @@
           <div class="footer-logo">
             <img src="Copie%20de%20LOGO_PNG_BLANC.PNG" alt="T&amp;F Group">
           </div>
-          <p class="footer-desc">T&amp;F - Entreprise de rénovation tous corps d'état.<br>Rigueur, transparence et suivi personnalisé au service de votre projet.</p>
+          <p class="footer-desc">T&amp;F - Entreprise de conception et réalisation tous corps d'état.<br>Rigueur, transparence et suivi personnalisé au service de votre projet.</p>
         </div>
       </div>
       <div>
@@ -1366,16 +1799,12 @@
       <div>
         <div class="footer-col-title">Contact</div>
         <div class="footer-contact-item">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.4a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.13.96.33 1.9.62 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.77-1.77a2 2 0 0 1 2.11-.45c.91.29 1.85.5 2.81.62A2 2 0 0 1 22 16.92z"/></svg>
-          <a href="tel:+33601460816">06 01 46 08 16</a>
-        </div>
-        <div class="footer-contact-item">
           <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <a href="mailto:f.brisson@tf-group.fr">f.brisson@tf-group.fr</a>
+          <a href="mailto:f.brisson@tf-group.fr?subject=Prise%20de%20contact%20-%20site%20TF%20Group" class="footer-email-link">f.brisson@tf-group.fr</a>
         </div>
         <div class="footer-contact-item">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Île-de-France &amp;<br>Région parisienne</span>
+          <span>Île-de-France</span>
         </div>
       </div>
     </div>
@@ -1397,9 +1826,17 @@
   });
 
   // HERO LOAD ANIMATION
-  window.addEventListener('load', () => {
-    document.getElementById('hero').classList.add('loaded');
-  });
+  const heroSection = document.getElementById('hero');
+  const heroImage = new Image();
+  const revealHero = () => heroSection.classList.add('loaded');
+  heroImage.addEventListener('load', revealHero, { once: true });
+  heroImage.addEventListener('error', revealHero, { once: true });
+  heroImage.src = 'hero-tf.jpg';
+  if (heroImage.complete) {
+    revealHero();
+  } else {
+    window.setTimeout(revealHero, 1400);
+  }
 
   // MOBILE NAV
   function toggleMobileNav() {
