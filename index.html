@@ -5,20 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>T&amp;F - Conception et réalisation tous corps d'état en Île-de-France</title>
 <meta name="description" content="T&amp;F accompagne vos projets de conception-réalisation, rénovation et aménagement, avec rigueur, transparence et suivi personnalisé.">
+<meta name="theme-color" content="#FAFAF7">
 <link rel="canonical" href="https://tf-group.fr/">
 <meta property="og:title" content="T&amp;F - Conception et réalisation tous corps d'état en Île-de-France">
 <meta property="og:description" content="T&amp;F accompagne vos projets de conception-réalisation, rénovation et aménagement, avec rigueur, transparence et suivi personnalisé.">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
 <meta property="og:url" content="https://tf-group.fr/">
 <meta property="og:site_name" content="T&amp;F">
 <meta property="og:image" content="https://tf-group.fr/og-image.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Aperçu du site T&amp;F avec un intérieur lumineux, le logo T&amp;F et la signature 'Votre projet, bien piloté jusqu'au bout'.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="T&amp;F - Conception et réalisation tous corps d'état en Île-de-France">
 <meta name="twitter:description" content="T&amp;F accompagne vos projets de conception-réalisation, rénovation et aménagement, avec rigueur, transparence et suivi personnalisé.">
 <meta name="twitter:image" content="https://tf-group.fr/og-image.jpg">
+<meta name="twitter:image:alt" content="Aperçu du site T&amp;F avec un intérieur lumineux, le logo T&amp;F et la signature 'Votre projet, bien piloté jusqu'au bout'.">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" href="Copie%20de%20LOGO_FAVICON.png">
 <link rel="preload" as="image" href="hero-tf.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -176,10 +183,12 @@
     background: linear-gradient(to bottom, rgba(30,30,30,0.15) 0%, rgba(30,30,30,0.7) 100%),
       url('hero-tf.jpg') center/cover no-repeat;
     opacity: 0;
-    transform: scale(1.03);
-    transition: opacity 0.55s ease, transform 8s ease-out;
+    transform: scale(1.045);
+    filter: brightness(0.82) saturate(0.88);
+    will-change: opacity, transform, filter;
+    transition: opacity 0.95s cubic-bezier(0.22,1,0.36,1), transform 6.5s ease-out, filter 1.05s ease-out;
   }
-  #hero.loaded .hero-bg { opacity: 1; transform: scale(1); }
+  #hero.loaded .hero-bg { opacity: 1; transform: scale(1); filter: brightness(1) saturate(1); }
   .hero-content { position: relative; z-index: 2; width: 100%; padding: 0 60px 100px; }
   .hero-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,250,247,0.75); margin-bottom: 24px; display: flex; align-items: center; gap: 14px; opacity: 0; transform: translateY(20px); animation: fadeUp 0.55s 0.12s forwards; text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
   .hero-label::before { content:''; width:40px; height:1px; background:var(--gold); display:block; }

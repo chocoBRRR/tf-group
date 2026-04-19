@@ -4,6 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>T&amp;F - Mentions légales</title>
+<meta name="description" content="Mentions légales de T&amp;F, entreprise de conception et réalisation tous corps d'état en Île-de-France.">
+<meta name="theme-color" content="#FAFAF7">
+<link rel="canonical" href="https://tf-group.fr/mentions-legales.html">
+<meta property="og:title" content="T&amp;F - Mentions légales">
+<meta property="og:description" content="Mentions légales de T&amp;F, entreprise de conception et réalisation tous corps d'état en Île-de-France.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://tf-group.fr/mentions-legales.html">
+<meta property="og:site_name" content="T&amp;F">
+<meta property="og:image" content="https://tf-group.fr/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Aperçu du site T&amp;F avec un intérieur lumineux, le logo T&amp;F et la signature 'Votre projet, bien piloté jusqu'au bout'.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="T&amp;F - Mentions légales">
+<meta name="twitter:description" content="Mentions légales de T&amp;F, entreprise de conception et réalisation tous corps d'état en Île-de-France.">
+<meta name="twitter:image" content="https://tf-group.fr/og-image.jpg">
+<meta name="twitter:image:alt" content="Aperçu du site T&amp;F avec un intérieur lumineux, le logo T&amp;F et la signature 'Votre projet, bien piloté jusqu'au bout'.">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" href="Copie%20de%20LOGO_FAVICON.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,7 +78,8 @@
     border-bottom-color: var(--border);
     box-shadow: 0 8px 28px rgba(30,30,30,0.05);
   }
-  .nav-logo { display: flex; align-items: center; text-decoration: none; margin-left: 10px; }
+  .nav-logo { display: flex; align-items: center; text-decoration: none; }
+  .nav-logo { margin-left: 10px; }
   .nav-logo img { height: 80px; width: auto; display: block; max-width: 260px; object-fit: contain; transition: height 0.35s; }
   nav.scrolled .nav-logo img { height: 62px; }
   .nav-links {
@@ -278,28 +301,98 @@
   .footer-contact-item svg { width: 13px; height: 13px; stroke: var(--gold); fill: none; stroke-width: 1.5; margin-top: 2px; flex-shrink: 0; }
   .footer-contact-item a, .footer-contact-item span { font-size: 0.78rem; color: rgba(250,250,247,0.5); line-height: 1.58; text-decoration: none; transition: color 0.2s; }
   .footer-contact-item a:hover { color: var(--gold); }
+  .footer-email-link {
+    color: var(--gold) !important;
+    border-bottom: 1px solid rgba(200,169,106,0.45);
+    overflow-wrap: anywhere;
+  }
+  .footer-email-link:hover {
+    color: var(--gold-light) !important;
+    border-color: rgba(223,192,138,0.7);
+  }
   .footer-bottom { border-top: 1px solid rgba(250,250,247,0.06); padding-top: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
   .footer-copy { font-size: 0.68rem; color: rgba(250,250,247,0.25); }
   .footer-legal { display: flex; gap: 24px; }
   .footer-legal a { font-size: 0.68rem; color: rgba(250,250,247,0.25); text-decoration: none; transition: color 0.2s; }
   .footer-legal a:hover { color: var(--gold); }
 
+  @media (max-width: 1100px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
   @media (max-width: 900px) {
-    nav { padding: 0 28px; height: 80px; }
-    nav.scrolled { padding: 0 20px; height: 66px; }
-    .nav-logo { margin-left: 0; }
-    .nav-logo img { height: 72px; }
-    nav.scrolled .nav-logo img { height: 58px; }
+    nav {
+      padding: 0 20px;
+      height: 74px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+    }
+    nav.scrolled {
+      padding: 0 16px 0 20px;
+      height: 62px;
+    }
+    .nav-logo {
+      margin-left: 0;
+      justify-self: start;
+    }
+    .nav-logo img { height: 68px; }
+    nav.scrolled .nav-logo img { height: 54px; }
     .nav-links { display: none; }
     .nav-cta { display: none; }
-    .nav-burger { display: flex; }
-    .hero-grid, .legal-grid, .footer-grid { grid-template-columns: 1fr; }
+    .nav-burger {
+      display: flex;
+      justify-self: end;
+      order: 2;
+    }
+    .hero-grid, .legal-grid { grid-template-columns: 1fr; }
     .container { padding: 0 24px; }
     .hero { padding: 138px 0 44px; }
+
+    .footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 18px;
+    }
+    .footer-grid > div:first-child,
+    .footer-grid > div:last-child { grid-column: 1 / -1; }
+    .footer-grid > div:nth-child(2) .footer-links,
+    .footer-grid > div:nth-child(3) .footer-links {
+      align-items: flex-start;
+    }
+    .footer-brand {
+      flex-direction: row;
+      align-items: flex-start;
+      width: 100%;
+      gap: 14px;
+    }
+    .footer-logo img { height: 54px; }
+    .footer-desc { max-width: 34ch; }
+    .footer-grid > div:last-child {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 8px 18px;
+      align-items: start;
+      justify-items: start;
+    }
+    .footer-grid > div:last-child .footer-col-title {
+      grid-column: 1 / -1;
+      margin-bottom: 4px;
+    }
+    .footer-grid > div:last-child .footer-contact-item {
+      margin-bottom: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      justify-content: flex-start;
+      text-align: left;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .footer-legal { gap: 16px; flex-wrap: wrap; }
   }
 
   @media (max-width: 600px) {
-    .footer-bottom { flex-direction: column; }
     .legal-card { padding: 26px 24px 24px; }
   }
 </style>
@@ -404,7 +497,7 @@
           <div class="footer-logo">
             <img src="Copie%20de%20LOGO_PNG_BLANC.PNG" alt="T&amp;F Group">
           </div>
-          <p class="footer-desc">T&amp;F - Entreprise de rénovation tous corps d'état.<br>Rigueur, transparence et suivi personnalisé au service de votre projet.</p>
+          <p class="footer-desc">T&amp;F - Entreprise de conception et réalisation tous corps d'état.<br>Rigueur, transparence et suivi personnalisé au service de votre projet.</p>
         </div>
       </div>
       <div>
@@ -430,16 +523,12 @@
       <div>
         <div class="footer-col-title">Contact</div>
         <div class="footer-contact-item">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.4a2 2 0 0 1 1.99-2.18h3a2 2 0 0 1 2 1.72c.13.96.33 1.9.62 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l1.77-1.77a2 2 0 0 1 2.11-.45c.91.29 1.85.5 2.81.62A2 2 0 0 1 22 16.92z"/></svg>
-          <a href="tel:+33601460816">06 01 46 08 16</a>
-        </div>
-        <div class="footer-contact-item">
           <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <a href="mailto:f.brisson@tf-group.fr">f.brisson@tf-group.fr</a>
+          <a href="mailto:f.brisson@tf-group.fr?subject=Prise%20de%20contact%20-%20site%20TF%20Group" class="footer-email-link">f.brisson@tf-group.fr</a>
         </div>
         <div class="footer-contact-item">
           <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Île-de-France &amp;<br>Région parisienne</span>
+          <span>Île-de-France</span>
         </div>
       </div>
     </div>
