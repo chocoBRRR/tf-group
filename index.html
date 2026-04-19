@@ -407,11 +407,12 @@
   }
   .form-card-stage {
     position: relative;
+    overflow: hidden;
     transition: height 0.62s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .form-panel {
     width: 100%;
-    transition: opacity 0.34s ease, transform 0.62s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear;
+    transition: opacity 0.42s ease, transform 0.62s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.62s;
     will-change: opacity, transform;
   }
   .form-panel.is-active {
@@ -426,8 +427,33 @@
     inset: 0;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(18px);
+    transform: translateY(20px);
     pointer-events: none;
+  }
+  .form-card-stage.is-transitioning .form-panel {
+    position: absolute;
+    inset: 0;
+  }
+  .form-panel.is-entering,
+  .form-panel.is-leaving {
+    visibility: visible;
+    pointer-events: none;
+  }
+  .form-panel.is-entering {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  .form-panel.is-entering.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .form-panel.is-leaving {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .form-panel.is-leaving.is-fading-out {
+    opacity: 0;
+    transform: translateY(-14px);
   }
   .form-title { font-size: 1.4rem; color: var(--graphite); margin-bottom: 6px; }
   .form-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 26px; }
@@ -1943,8 +1969,10 @@
   const photoPreview = document.getElementById('photoPreview');
   const photoCount = document.getElementById('photoCount');
   const resetFormButton = document.getElementById('resetFormButton');
+  const FORM_PANEL_TRANSITION_MS = 680;
   let selectedFiles = [];
   let activeFormPanel = contactForm;
+  let isFormPanelTransitioning = false;
 
   function escapeHtml(value) {
     return value.replace(/[&<>"']/g, char => ({
@@ -2152,29 +2180,47 @@
   }
 
   function switchFormPanel(nextPanel) {
-    if (!nextPanel || nextPanel === activeFormPanel) return;
+    if (!nextPanel || nextPanel === activeFormPanel || isFormPanelTransitioning) return;
 
+    isFormPanelTransitioning = true;
     const currentPanel = activeFormPanel;
     const currentHeight = getPanelHeight(currentPanel);
     const nextHeight = getPanelHeight(nextPanel);
 
     formCardStage.style.height = `${currentHeight}px`;
     formCardStage.getBoundingClientRect();
+    formCardStage.classList.add('is-transitioning');
 
-    currentPanel.classList.remove('is-active');
-    currentPanel.classList.add('is-hidden');
+    currentPanel.classList.remove('is-active', 'is-hidden', 'is-entering', 'is-visible');
+    currentPanel.classList.add('is-leaving');
+    currentPanel.classList.remove('is-fading-out');
     currentPanel.setAttribute('aria-hidden', 'true');
 
-    nextPanel.classList.remove('is-hidden');
-    nextPanel.classList.add('is-active');
+    nextPanel.classList.remove('is-active', 'is-hidden', 'is-leaving', 'is-fading-out');
+    nextPanel.classList.add('is-entering');
+    nextPanel.classList.remove('is-visible');
     nextPanel.setAttribute('aria-hidden', 'false');
 
-    activeFormPanel = nextPanel;
-
     requestAnimationFrame(() => {
+      currentPanel.classList.add('is-fading-out');
+      nextPanel.classList.add('is-visible');
       formCardStage.style.height = `${nextHeight}px`;
       keepFormCardInView();
     });
+
+    window.setTimeout(() => {
+      currentPanel.classList.remove('is-leaving', 'is-fading-out');
+      currentPanel.classList.add('is-hidden');
+
+      nextPanel.classList.remove('is-entering', 'is-visible');
+      nextPanel.classList.add('is-active');
+
+      activeFormPanel = nextPanel;
+      formCardStage.classList.remove('is-transitioning');
+      formCardStage.style.height = 'auto';
+      isFormPanelTransitioning = false;
+      keepFormCardInView();
+    }, FORM_PANEL_TRANSITION_MS);
   }
 
   function resetContactFormState() {
@@ -2189,20 +2235,19 @@
   }
 
   function showContactForm() {
+    resetContactFormState();
     switchFormPanel(contactForm);
     window.setTimeout(() => {
-      formCardStage.style.height = 'auto';
       const firstField = document.getElementById('fname');
       if (firstField) firstField.focus({ preventScroll: true });
-    }, 680);
+    }, FORM_PANEL_TRANSITION_MS);
   }
 
   function showFormSuccessState() {
     switchFormPanel(formSuccess);
-    resetContactFormState();
     window.setTimeout(() => {
-      formCardStage.style.height = 'auto';
-    }, 680);
+      resetContactFormState();
+    }, FORM_PANEL_TRANSITION_MS);
   }
 
   projectTrigger.addEventListener('click', () => {
@@ -2394,7 +2439,7 @@
       showFormSuccessState();
     } catch (error) {
       console.error('Erreur lors de l’envoi du formulaire :', error);
-      showFormError('L’envoi a échoué. Vous pouvez réessayer dans un instant ou <a href="mailto:f.brisson@tf-group.fr?subject=Prise%20de%20contact%20-%20site%20TF%20Group">contacter directement</a>.', true);
+      showFormError('L’envoi a échoué. Vous pouvez réessayer dans un instant ou <a href="mailto:f.brisson@tf-group.fr?subject=Prise%20de%20contact%20-%20site%20TF%20Group">nous contacter directement</a>.', true);
     } finally {
       setSubmitState(false);
     }
