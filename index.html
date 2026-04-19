@@ -398,7 +398,37 @@
   .projet-feature-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
   .projet-feature-text { font-size: 0.8rem; color: rgba(250,250,247,0.7); line-height: 1.62; }
   .projet-feature-title { font-size: 0.84rem; font-weight: 600; color: var(--white); margin-bottom: 3px; }
-  .form-card { background: var(--white); padding: 36px 40px 38px; border-radius: 2px; }
+  .form-card {
+    background: var(--white);
+    padding: 36px 40px 38px;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-card-stage {
+    position: relative;
+    transition: height 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .form-panel {
+    width: 100%;
+    transition: opacity 0.34s ease, transform 0.62s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear;
+    will-change: opacity, transform;
+  }
+  .form-panel.is-active {
+    position: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .form-panel.is-hidden {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(18px);
+    pointer-events: none;
+  }
   .form-title { font-size: 1.4rem; color: var(--graphite); margin-bottom: 6px; }
   .form-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 26px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -631,6 +661,14 @@
     border-radius: 2px;
   }
   .form-status-error.visible { display: block; }
+  .form-status-error a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+  .form-status-error a:hover {
+    color: #6f2018;
+  }
   .form-note { font-size: 0.68rem; line-height: 1.6; color: rgba(122,122,110,0.92); margin: 10px auto 0; text-align: center; max-width: 420px; }
   .form-note a { color: var(--olive); text-decoration: none; border-bottom: 1px solid rgba(63,74,60,0.25); transition: color 0.2s, border-color 0.2s; }
   .form-note a:hover { color: var(--graphite); border-color: rgba(30,30,30,0.3); }
@@ -638,7 +676,13 @@
   .budget-opt { display: none; }
   .budget-label { display: block; text-align: center; padding: 10px 8px; border: 1.5px solid var(--border); border-radius: 2px; cursor: pointer; font-size: 0.72rem; font-weight: 600; color: var(--text-muted); transition: all 0.2s; }
   .budget-opt:checked + .budget-label { border-color: var(--olive); color: var(--olive); background: rgba(63,74,60,0.05); }
-  .form-success { display: none; text-align: center; padding: 24px 0; max-width: 620px; margin: 0 auto; }
+  .form-success {
+    display: block;
+    text-align: center;
+    padding: 26px 0 10px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
   .form-success-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(63,74,60,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
   .form-success-icon svg { width: 28px; height: 28px; stroke: var(--olive); fill: none; stroke-width: 1.5; }
   .form-success-copy { margin-top: 10px; font-size: 0.95rem; line-height: 1.8; color: var(--text-muted); }
@@ -1634,8 +1678,9 @@
         </div>
       </div>
       <div class="reveal reveal-delay-2">
-        <div class="form-card">
-          <form id="contactForm">
+        <div class="form-card" id="formCard">
+          <div class="form-card-stage" id="formCardStage">
+          <form id="contactForm" class="form-panel is-active" aria-hidden="false">
             <h3 class="form-title">Décrivez votre projet</h3>
             <p class="form-subtitle">Quelques photos, un dessin ou quelques mots suffisent pour démarrer.</p>
             <div class="form-row">
@@ -1716,11 +1761,12 @@
             <div class="form-status-error" id="formError" role="alert"></div>
             <p class="form-note">* Champs obligatoires. Ces informations sont utilisées pour traiter votre demande. <a href="politique-confidentialite.html">En savoir plus</a>.</p>
           </form>
-          <div class="form-success" id="formSuccess">
+          <div class="form-success form-panel is-hidden" id="formSuccess" aria-hidden="true">
             <div class="form-success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
             <h3 class="form-title">Demande bien reçue</h3>
             <p class="form-success-copy">Nous revenons vers vous rapidement pour faire un premier point sur votre projet.</p>
             <button type="button" class="form-success-link" id="resetFormButton">Envoyer une autre demande</button>
+          </div>
           </div>
         </div>
       </div>
@@ -1881,8 +1927,9 @@
   }
 
   const contactForm = document.getElementById('contactForm');
-  const formWrapper = document.getElementById('contactForm');
   const formSuccess = document.getElementById('formSuccess');
+  const formCard = document.getElementById('formCard');
+  const formCardStage = document.getElementById('formCardStage');
   const formError = document.getElementById('formError');
   const submitButton = document.getElementById('submitButton');
   const attachTrigger = document.getElementById('attachTrigger');
@@ -1897,6 +1944,7 @@
   const photoCount = document.getElementById('photoCount');
   const resetFormButton = document.getElementById('resetFormButton');
   let selectedFiles = [];
+  let activeFormPanel = contactForm;
 
   function escapeHtml(value) {
     return value.replace(/[&<>"']/g, char => ({
@@ -1908,13 +1956,18 @@
     })[char]);
   }
 
-  function showFormError(message) {
-    formError.textContent = message;
+  function showFormError(message, allowHtml = false) {
+    if (allowHtml) {
+      formError.innerHTML = message;
+    } else {
+      formError.textContent = message;
+    }
     formError.classList.add('visible');
   }
 
   function clearFormError() {
     formError.textContent = '';
+    formError.innerHTML = '';
     formError.classList.remove('visible');
   }
 
@@ -2075,6 +2128,55 @@
     submitButton.firstChild.textContent = isPending ? 'Envoi en cours' : 'Demander mon estimation';
   }
 
+  function getPanelHeight(panel) {
+    return panel.scrollHeight;
+  }
+
+  function getFormCardScrollTarget() {
+    const headerOffset = window.innerWidth <= 768 ? 84 : 108;
+    return Math.max(window.scrollY + formCard.getBoundingClientRect().top - headerOffset, 0);
+  }
+
+  function keepFormCardInView() {
+    const rect = formCard.getBoundingClientRect();
+    const viewportPadding = window.innerWidth <= 768 ? 24 : 40;
+    const cardTooHigh = rect.top < viewportPadding;
+    const cardTooLow = rect.bottom > window.innerHeight - viewportPadding;
+
+    if (cardTooHigh || cardTooLow) {
+      window.scrollTo({
+        top: getFormCardScrollTarget(),
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  function switchFormPanel(nextPanel) {
+    if (!nextPanel || nextPanel === activeFormPanel) return;
+
+    const currentPanel = activeFormPanel;
+    const currentHeight = getPanelHeight(currentPanel);
+    const nextHeight = getPanelHeight(nextPanel);
+
+    formCardStage.style.height = `${currentHeight}px`;
+    formCardStage.getBoundingClientRect();
+
+    currentPanel.classList.remove('is-active');
+    currentPanel.classList.add('is-hidden');
+    currentPanel.setAttribute('aria-hidden', 'true');
+
+    nextPanel.classList.remove('is-hidden');
+    nextPanel.classList.add('is-active');
+    nextPanel.setAttribute('aria-hidden', 'false');
+
+    activeFormPanel = nextPanel;
+
+    requestAnimationFrame(() => {
+      formCardStage.style.height = `${nextHeight}px`;
+      keepFormCardInView();
+    });
+  }
+
   function resetContactFormState() {
     contactForm.reset();
     selectedFiles = [];
@@ -2087,16 +2189,20 @@
   }
 
   function showContactForm() {
-    formSuccess.style.display = 'none';
-    formWrapper.style.display = 'block';
-    const firstField = document.getElementById('fname');
-    if (firstField) firstField.focus({ preventScroll: true });
+    switchFormPanel(contactForm);
+    window.setTimeout(() => {
+      formCardStage.style.height = 'auto';
+      const firstField = document.getElementById('fname');
+      if (firstField) firstField.focus({ preventScroll: true });
+    }, 680);
   }
 
   function showFormSuccessState() {
+    switchFormPanel(formSuccess);
     resetContactFormState();
-    formWrapper.style.display = 'none';
-    formSuccess.style.display = 'block';
+    window.setTimeout(() => {
+      formCardStage.style.height = 'auto';
+    }, 680);
   }
 
   projectTrigger.addEventListener('click', () => {
@@ -2195,6 +2301,11 @@
 
   updateProjectPicker();
   updatePhotoCount();
+  formCardStage.style.height = 'auto';
+
+  window.addEventListener('resize', () => {
+    formCardStage.style.height = 'auto';
+  });
 
   // REVEAL ON SCROLL
   const observer = new IntersectionObserver((entries) => {
@@ -2241,6 +2352,10 @@
       return;
     }
 
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     setSubmitState(true);
 
     try {
@@ -2279,7 +2394,7 @@
       showFormSuccessState();
     } catch (error) {
       console.error('Erreur lors de l’envoi du formulaire :', error);
-      showFormError('L’envoi a échoué. Vous pouvez réessayer dans un instant ou nous appeler directement.');
+      showFormError('L’envoi a échoué. Vous pouvez réessayer dans un instant ou <a href="mailto:f.brisson@tf-group.fr?subject=Prise%20de%20contact%20-%20site%20TF%20Group">contacter directement</a>.', true);
     } finally {
       setSubmitState(false);
     }
