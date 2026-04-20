@@ -404,6 +404,14 @@
     border-radius: 2px;
     position: relative;
     overflow: hidden;
+    transition:
+      padding-top var(--form-card-transition-duration, 1.12s) cubic-bezier(0.19, 1, 0.22, 1),
+      padding-bottom var(--form-card-transition-duration, 1.12s) cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: padding-top, padding-bottom;
+  }
+  .form-card.is-success {
+    padding-top: 22px;
+    padding-bottom: 24px;
   }
   .form-card-stage {
     position: relative;
@@ -1712,7 +1720,7 @@
           <div class="form-card-stage" id="formCardStage">
           <form id="contactForm" class="form-panel is-active" aria-hidden="false">
             <h3 class="form-title">Décrivez votre projet</h3>
-            <p class="form-subtitle">Quelques photos, un dessin ou quelques mots suffisent pour démarrer.</p>
+            <p class="form-subtitle">Des photos, un croquis ou quelques mots suffisent pour démarrer.</p>
             <div class="form-row">
               <div class="form-group">
                 <label>Prénom *</label>
@@ -2203,11 +2211,14 @@
     const currentHeight = getPanelHeight(currentPanel);
     const nextHeight = getPanelHeight(nextPanel);
     const transitionDuration = getPanelTransitionDuration(nextPanel);
+    const isSuccessTarget = nextPanel === formSuccess;
 
     formCardStage.style.height = `${currentHeight}px`;
     formCardStage.getBoundingClientRect();
     formCardStage.classList.add('is-transitioning');
     formCardStage.style.transitionDuration = `${transitionDuration}ms`;
+    formCard.style.setProperty('--form-card-transition-duration', `${transitionDuration}ms`);
+    formCard.classList.toggle('is-success', isSuccessTarget);
 
     currentPanel.classList.remove('is-active', 'is-hidden', 'is-entering', 'is-visible');
     currentPanel.classList.add('is-leaving');
@@ -2239,6 +2250,7 @@
       formCardStage.classList.remove('is-transitioning');
       formCardStage.style.transitionDuration = '';
       formCardStage.style.height = 'auto';
+      formCard.style.removeProperty('--form-card-transition-duration');
       isFormPanelTransitioning = false;
       keepFormCardInView();
     }, transitionDuration);
