@@ -408,11 +408,11 @@
   .form-card-stage {
     position: relative;
     overflow: hidden;
-    transition: height 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: height 1.12s cubic-bezier(0.19, 1, 0.22, 1);
   }
   .form-panel {
     width: 100%;
-    transition: opacity 0.42s ease, transform 0.62s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.62s;
+    transition: opacity 0.68s ease, transform 1.12s cubic-bezier(0.19, 1, 0.22, 1), visibility 0s linear 1.12s;
     will-change: opacity, transform;
   }
   .form-panel.is-active {
@@ -427,7 +427,7 @@
     inset: 0;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px);
+    transform: translateY(14px);
     pointer-events: none;
   }
   .form-card-stage.is-transitioning .form-panel {
@@ -441,7 +441,7 @@
   }
   .form-panel.is-entering {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(18px);
   }
   .form-panel.is-entering.is-visible {
     opacity: 1;
@@ -453,7 +453,7 @@
   }
   .form-panel.is-leaving.is-fading-out {
     opacity: 0;
-    transform: translateY(-14px);
+    transform: translateY(-10px);
   }
   .form-title { font-size: 1.4rem; color: var(--graphite); margin-bottom: 6px; }
   .form-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 26px; }
@@ -1969,7 +1969,7 @@
   const photoPreview = document.getElementById('photoPreview');
   const photoCount = document.getElementById('photoCount');
   const resetFormButton = document.getElementById('resetFormButton');
-  const FORM_PANEL_TRANSITION_MS = 680;
+  const FORM_PANEL_TRANSITION_MS = 1160;
   let selectedFiles = [];
   let activeFormPanel = contactForm;
   let isFormPanelTransitioning = false;
