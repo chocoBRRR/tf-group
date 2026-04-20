@@ -475,6 +475,14 @@
   .form-group input, .form-group textarea { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); background: var(--white); font-family: 'Inter', sans-serif; font-size: 0.88rem; color: var(--graphite); border-radius: 2px; outline: none; transition: border-color 0.25s, box-shadow 0.25s; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
   .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(200,169,106,0.12); }
   .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-field-error {
+    display: none;
+    margin-top: 6px;
+    font-size: 0.68rem;
+    line-height: 1.45;
+    color: #a13c30;
+  }
+  .form-field-error.visible { display: block; }
   .form-project-picker { position: relative; }
   .form-project-picker.is-invalid .form-project-trigger {
     border-color: #c0392b;
@@ -1730,32 +1738,35 @@
       <div class="reveal reveal-delay-2">
         <div class="form-card" id="formCard">
           <div class="form-card-stage" id="formCardStage">
-          <form id="contactForm" class="form-panel is-active" aria-hidden="false">
+          <form id="contactForm" class="form-panel is-active" aria-hidden="false" novalidate>
             <h3 class="form-title">Décrivez votre projet</h3>
             <p class="form-subtitle">Des photos, un croquis ou quelques mots suffisent pour démarrer.</p>
             <div class="form-row">
               <div class="form-group">
-                <label>Prénom *</label>
-                <input type="text" id="fname" name="prenom" placeholder="Votre prénom" required>
+                <label for="fname">Prénom *</label>
+                <input type="text" id="fname" name="prenom" placeholder="Votre prénom" required aria-describedby="fnameError">
+                <div class="form-field-error" id="fnameError" aria-live="polite"></div>
               </div>
               <div class="form-group">
-                <label>Nom *</label>
-                <input type="text" id="lname" name="nom" placeholder="Votre nom" required>
+                <label for="lname">Nom *</label>
+                <input type="text" id="lname" name="nom" placeholder="Votre nom" required aria-describedby="lnameError">
+                <div class="form-field-error" id="lnameError" aria-live="polite"></div>
               </div>
             </div>
             <div class="form-group">
-              <label>Email *</label>
-              <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" placeholder="votre@email.com" required aria-describedby="emailError">
+              <div class="form-field-error" id="emailError" aria-live="polite"></div>
             </div>
             <div class="form-group">
-              <label>Téléphone</label>
+              <label for="phone">Téléphone</label>
               <input type="tel" id="phone" name="telephone" placeholder="06 XX XX XX XX" inputmode="tel" autocomplete="tel">
             </div>
             <div class="form-group">
               <label id="projectLabel">Type de projet *</label>
               <div class="form-project-picker" id="projectPicker">
                 <input type="hidden" id="project" name="type_projet" value="">
-                <button type="button" class="form-project-trigger" id="projectTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="projectLabel projectTriggerValue">
+                <button type="button" class="form-project-trigger" id="projectTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="projectLabel projectTriggerValue" aria-describedby="projectError">
                   <span class="form-project-trigger-label is-placeholder" id="projectTriggerValue">Sélectionnez…</span>
                   <span class="form-project-trigger-icon" aria-hidden="true"></span>
                 </button>
@@ -1770,6 +1781,7 @@
                   </div>
                 </div>
               </div>
+              <div class="form-field-error" id="projectError" aria-live="polite"></div>
             </div>
             <div class="form-group">
               <label>Budget envisagé</label>
@@ -1996,6 +2008,7 @@
   const phoneInput = document.getElementById('phone');
   const FORM_PANEL_TRANSITION_MS = 1160;
   const FORM_PANEL_COLLAPSE_MS = 1720;
+  const FORM_PANEL_RETURN_FADE_DELAY_MS = 180;
   let selectedFiles = [];
   let activeFormPanel = contactForm;
   let isFormPanelTransitioning = false;
@@ -2032,24 +2045,48 @@
     return typeof target === 'string' ? document.getElementById(target) : target;
   }
 
+  function getFieldErrorKey(target) {
+    if (!target) return null;
+    if (typeof target === 'string') return target;
+    if (target === projectInput || target === projectPicker || target === projectTrigger) return 'project';
+    return target.id || null;
+  }
+
+  function getFieldErrorMessageElement(target) {
+    const fieldKey = getFieldErrorKey(target);
+    return fieldKey ? document.getElementById(`${fieldKey}Error`) : null;
+  }
+
+  function setFieldErrorMessage(target, message = '') {
+    const errorElement = getFieldErrorMessageElement(target);
+    if (!errorElement) return;
+    errorElement.textContent = message;
+    errorElement.classList.toggle('visible', Boolean(message));
+  }
+
   function clearFieldError(target) {
     const element = getFieldErrorTarget(target);
     if (!element) return;
+    setFieldErrorMessage(target);
     if (element === projectPicker) {
       element.classList.remove('is-invalid');
       element.style.animation = '';
+      projectTrigger.removeAttribute('aria-invalid');
       return;
     }
     element.style.borderColor = '';
     element.style.animation = '';
+    element.removeAttribute('aria-invalid');
   }
 
-  function markFieldError(target) {
+  function markFieldError(target, message = '') {
     const element = getFieldErrorTarget(target);
     if (!element) return;
+    setFieldErrorMessage(target, message);
     if (element === projectPicker) {
       element.classList.add('is-invalid');
       element.style.animation = 'shake 0.3s';
+      projectTrigger.setAttribute('aria-invalid', 'true');
       setTimeout(() => {
         element.style.animation = '';
       }, 400);
@@ -2057,9 +2094,32 @@
     }
     element.style.borderColor = '#c0392b';
     element.style.animation = 'shake 0.3s';
+    element.setAttribute('aria-invalid', 'true');
     setTimeout(() => {
       element.style.animation = '';
     }, 400);
+  }
+
+  function focusFieldErrorTarget(target) {
+    const element = getFieldErrorTarget(target);
+    if (!element) return;
+
+    const focusTarget = element === projectPicker ? projectTrigger : element;
+    const scrollTarget = element === projectPicker ? projectPicker : element;
+
+    if (scrollTarget instanceof HTMLElement) {
+      scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    if (focusTarget instanceof HTMLElement) {
+      window.setTimeout(() => {
+        focusTarget.focus({ preventScroll: true });
+      }, 140);
+    }
+  }
+
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
 
   function updateProjectPicker() {
@@ -2224,6 +2284,7 @@
     const nextHeight = getPanelHeight(nextPanel);
     const transitionDuration = getPanelTransitionDuration(nextPanel);
     const isSuccessTarget = nextPanel === formSuccess;
+    const entranceDelay = currentPanel === formSuccess && nextPanel === contactForm ? FORM_PANEL_RETURN_FADE_DELAY_MS : 0;
 
     formCardStage.style.height = `${currentHeight}px`;
     formCardStage.getBoundingClientRect();
@@ -2245,9 +2306,11 @@
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         currentPanel.classList.add('is-fading-out');
-        nextPanel.classList.add('is-visible');
         formCardStage.style.height = `${nextHeight}px`;
         keepFormCardInView();
+        window.setTimeout(() => {
+          nextPanel.classList.add('is-visible');
+        }, entranceDelay);
       });
     });
 
@@ -2461,14 +2524,23 @@
     const project = projectInput.value;
     const desc = document.getElementById('desc').value.trim();
     const budget = getBudgetValue();
-    const requiredFieldIds = [fname ? null : 'fname', lname ? null : 'lname', email ? null : 'email', project ? null : 'project'].filter(Boolean);
+    const validationErrors = [];
 
     clearFormError();
-    ['fname', 'lname', 'email', 'project'].forEach(id => clearFieldError(document.getElementById(id)));
+    ['fname', 'lname', 'email', 'project'].forEach(id => clearFieldError(id));
 
-    if (requiredFieldIds.length) {
-      requiredFieldIds.forEach(id => markFieldError(document.getElementById(id)));
-      showFormError('Merci de renseigner les champs obligatoires avant l’envoi.');
+    if (!fname) validationErrors.push({ id: 'fname', message: 'Merci de renseigner votre prénom.' });
+    if (!lname) validationErrors.push({ id: 'lname', message: 'Merci de renseigner votre nom.' });
+    if (!email) {
+      validationErrors.push({ id: 'email', message: 'Merci de renseigner votre adresse email.' });
+    } else if (!isValidEmail(email)) {
+      validationErrors.push({ id: 'email', message: 'Merci de renseigner une adresse email valide.' });
+    }
+    if (!project) validationErrors.push({ id: 'project', message: 'Merci de sélectionner un type de projet.' });
+
+    if (validationErrors.length) {
+      validationErrors.forEach(({ id, message }) => markFieldError(id, message));
+      focusFieldErrorTarget(validationErrors[0].id);
       return;
     }
 
@@ -2524,6 +2596,10 @@
     event.preventDefault();
     submitForm();
   });
+
+  contactForm.addEventListener('invalid', event => {
+    event.preventDefault();
+  }, true);
 
   // BEFORE/AFTER SLIDERS
   document.querySelectorAll('.ba-slider-wrap').forEach(wrap => {
