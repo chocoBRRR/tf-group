@@ -715,19 +715,26 @@
   .budget-label { display: block; text-align: center; padding: 10px 8px; border: 1.5px solid var(--border); border-radius: 2px; cursor: pointer; font-size: 0.72rem; font-weight: 600; color: var(--text-muted); transition: all 0.2s; }
   .budget-opt:checked + .budget-label { border-color: var(--olive); color: var(--olive); background: rgba(63,74,60,0.05); }
   .form-success {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     padding: 10px 0 2px;
-    max-width: 500px;
+    max-width: 560px;
     margin: 0 auto;
+  }
+  .form-success .form-title {
+    margin: 0;
+    text-align: center;
   }
   .form-success-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(63,74,60,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
   .form-success-icon svg { width: 28px; height: 28px; stroke: var(--olive); fill: none; stroke-width: 1.5; }
-  .form-success-copy { margin-top: 8px; font-size: 0.93rem; line-height: 1.72; color: var(--text-muted); }
+  .form-success-copy { margin: 10px auto 0; max-width: 36rem; font-size: 0.93rem; line-height: 1.72; color: var(--text-muted); text-align: center; }
   .form-success-link {
-    margin-top: 14px;
+    margin: 14px auto 0;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: none;
     border: none;
@@ -1222,6 +1229,11 @@
     nav { padding: 0 16px; }
     nav.scrolled { padding: 0 14px 0 16px; }
     .container { padding: 0 18px; }
+    .form-group input,
+    .form-group textarea,
+    .form-project-trigger {
+      font-size: 16px;
+    }
     .hero-content { padding: 98px 18px 34px; min-height: 520px; }
     #hero { min-height: 520px; }
     .hero-label {
@@ -2267,6 +2279,21 @@
     updateProjectPicker();
   }
 
+  function blurActiveFormField() {
+    const activeElement = document.activeElement;
+    if (!activeElement) return;
+
+    const isEditableField =
+      activeElement.tagName === 'INPUT' ||
+      activeElement.tagName === 'TEXTAREA' ||
+      activeElement.tagName === 'SELECT' ||
+      activeElement.isContentEditable;
+
+    if (isEditableField || activeElement === projectTrigger) {
+      activeElement.blur();
+    }
+  }
+
   function showContactForm() {
     resetContactFormState();
     switchFormPanel(contactForm);
@@ -2278,6 +2305,7 @@
 
   function showFormSuccessState() {
     const transitionDuration = getPanelTransitionDuration(formSuccess);
+    blurActiveFormField();
     switchFormPanel(formSuccess);
     window.setTimeout(() => {
       resetContactFormState();
@@ -2330,6 +2358,12 @@
   document.addEventListener('click', event => {
     if (!projectPicker.contains(event.target)) {
       closeProjectMenu();
+    }
+  });
+
+  document.addEventListener('pointerdown', event => {
+    if (!formCard.contains(event.target)) {
+      blurActiveFormField();
     }
   });
 
