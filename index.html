@@ -2180,6 +2180,10 @@
     }
   }
 
+  function getPanelTransitionDuration(nextPanel) {
+    return nextPanel === formSuccess ? FORM_PANEL_COLLAPSE_MS : FORM_PANEL_TRANSITION_MS;
+  }
+
   function switchFormPanel(nextPanel) {
     if (!nextPanel || nextPanel === activeFormPanel || isFormPanelTransitioning) return;
 
@@ -2187,8 +2191,7 @@
     const currentPanel = activeFormPanel;
     const currentHeight = getPanelHeight(currentPanel);
     const nextHeight = getPanelHeight(nextPanel);
-    const isCollapsing = nextPanel === formSuccess;
-    const transitionDuration = isCollapsing ? FORM_PANEL_COLLAPSE_MS : FORM_PANEL_TRANSITION_MS;
+    const transitionDuration = getPanelTransitionDuration(nextPanel);
 
     formCardStage.style.height = `${currentHeight}px`;
     formCardStage.getBoundingClientRect();
@@ -2251,10 +2254,11 @@
   }
 
   function showFormSuccessState() {
+    const transitionDuration = getPanelTransitionDuration(formSuccess);
     switchFormPanel(formSuccess);
     window.setTimeout(() => {
       resetContactFormState();
-    }, FORM_PANEL_TRANSITION_MS);
+    }, transitionDuration);
   }
 
   projectTrigger.addEventListener('click', () => {
