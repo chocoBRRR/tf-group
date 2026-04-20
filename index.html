@@ -410,6 +410,12 @@
     overflow: hidden;
     transition: height 1.12s cubic-bezier(0.19, 1, 0.22, 1);
   }
+  .form-card-stage.is-collapsing {
+    transition-duration: 1.72s;
+  }
+  .form-card-stage.is-expanding {
+    transition-duration: 1.12s;
+  }
   .form-panel {
     width: 100%;
     transition: opacity 0.68s ease, transform 1.12s cubic-bezier(0.19, 1, 0.22, 1), visibility 0s linear 1.12s;
@@ -1970,6 +1976,7 @@
   const photoCount = document.getElementById('photoCount');
   const resetFormButton = document.getElementById('resetFormButton');
   const FORM_PANEL_TRANSITION_MS = 1160;
+  const FORM_PANEL_COLLAPSE_MS = 1720;
   let selectedFiles = [];
   let activeFormPanel = contactForm;
   let isFormPanelTransitioning = false;
@@ -2186,10 +2193,14 @@
     const currentPanel = activeFormPanel;
     const currentHeight = getPanelHeight(currentPanel);
     const nextHeight = getPanelHeight(nextPanel);
+    const isCollapsing = nextPanel === formSuccess;
+    const transitionDuration = isCollapsing ? FORM_PANEL_COLLAPSE_MS : FORM_PANEL_TRANSITION_MS;
 
     formCardStage.style.height = `${currentHeight}px`;
     formCardStage.getBoundingClientRect();
     formCardStage.classList.add('is-transitioning');
+    formCardStage.classList.toggle('is-collapsing', isCollapsing);
+    formCardStage.classList.toggle('is-expanding', !isCollapsing);
 
     currentPanel.classList.remove('is-active', 'is-hidden', 'is-entering', 'is-visible');
     currentPanel.classList.add('is-leaving');
@@ -2217,10 +2228,11 @@
 
       activeFormPanel = nextPanel;
       formCardStage.classList.remove('is-transitioning');
+      formCardStage.classList.remove('is-collapsing', 'is-expanding');
       formCardStage.style.height = 'auto';
       isFormPanelTransitioning = false;
       keepFormCardInView();
-    }, FORM_PANEL_TRANSITION_MS);
+    }, transitionDuration);
   }
 
   function resetContactFormState() {
