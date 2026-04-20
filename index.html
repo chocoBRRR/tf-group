@@ -709,15 +709,15 @@
   .form-success {
     display: block;
     text-align: center;
-    padding: 26px 0 10px;
-    max-width: 520px;
+    padding: 10px 0 2px;
+    max-width: 500px;
     margin: 0 auto;
   }
-  .form-success-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(63,74,60,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .form-success-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(63,74,60,0.1); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
   .form-success-icon svg { width: 28px; height: 28px; stroke: var(--olive); fill: none; stroke-width: 1.5; }
-  .form-success-copy { margin-top: 10px; font-size: 0.95rem; line-height: 1.8; color: var(--text-muted); }
+  .form-success-copy { margin-top: 8px; font-size: 0.93rem; line-height: 1.72; color: var(--text-muted); }
   .form-success-link {
-    margin-top: 18px;
+    margin-top: 14px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -1729,7 +1729,7 @@
             </div>
             <div class="form-group">
               <label>Téléphone</label>
-              <input type="tel" id="phone" name="telephone" placeholder="06 XX XX XX XX">
+              <input type="tel" id="phone" name="telephone" placeholder="06 XX XX XX XX" inputmode="tel" autocomplete="tel">
             </div>
             <div class="form-group">
               <label id="projectLabel">Type de projet *</label>
@@ -1973,6 +1973,7 @@
   const photoPreview = document.getElementById('photoPreview');
   const photoCount = document.getElementById('photoCount');
   const resetFormButton = document.getElementById('resetFormButton');
+  const phoneInput = document.getElementById('phone');
   const FORM_PANEL_TRANSITION_MS = 1160;
   const FORM_PANEL_COLLAPSE_MS = 1720;
   let selectedFiles = [];
@@ -2080,6 +2081,12 @@
     const baseIndex = currentIndex >= 0 ? currentIndex : Math.max(projectOptions.findIndex(option => option.dataset.projectOption === projectInput.value), 0);
     const nextIndex = (baseIndex + step + projectOptions.length) % projectOptions.length;
     projectOptions[nextIndex].focus();
+  }
+
+  function sanitizePhoneInput(value) {
+    const plusPrefix = value.trim().startsWith('+') ? '+' : '';
+    const digitsOnly = value.replace(/\D/g, '');
+    return plusPrefix + digitsOnly;
   }
 
   function updatePhotoCount() {
@@ -2343,6 +2350,13 @@
   });
 
   resetFormButton.addEventListener('click', showContactForm);
+
+  phoneInput.addEventListener('input', event => {
+    const sanitizedValue = sanitizePhoneInput(event.target.value);
+    if (event.target.value !== sanitizedValue) {
+      event.target.value = sanitizedValue;
+    }
+  });
 
   ['fname', 'lname', 'email'].forEach(id => {
     document.getElementById(id).addEventListener('input', event => {
