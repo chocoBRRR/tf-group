@@ -252,6 +252,70 @@
   .ba-slider-card { position: relative; overflow: hidden; background: var(--white); }
   .ba-slider-wrap { position: relative; overflow: hidden; cursor: ew-resize; aspect-ratio: 4/3; user-select: none; }
   .ba-single-card .ba-slider-wrap { cursor: default; }
+  .ba-mobile-toggle {
+    display: none;
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 12;
+    pointer-events: auto;
+  }
+  .ba-mobile-toggle-btn {
+    border: none;
+    background: transparent;
+    color: rgba(30,30,30,0.62);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.56rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+  }
+  .ba-mobile-toggle--segmented {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid rgba(250,250,247,0.38);
+    background: rgba(250,250,247,0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 10px 24px rgba(30,30,30,0.08);
+  }
+  .ba-mobile-toggle--segmented .ba-mobile-toggle-btn {
+    padding: 7px 11px;
+    border-radius: 999px;
+  }
+  .ba-mobile-toggle--segmented .ba-mobile-toggle-btn.is-active {
+    background: var(--olive);
+    color: var(--white);
+  }
+  .ba-mobile-toggle--editorial {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(250,250,247,0.76);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(250,250,247,0.34);
+    box-shadow: 0 10px 24px rgba(30,30,30,0.08);
+  }
+  .ba-mobile-toggle--editorial .ba-mobile-toggle-btn {
+    padding: 0;
+    border-bottom: 1px solid transparent;
+  }
+  .ba-mobile-toggle--editorial .ba-mobile-toggle-btn.is-active {
+    color: var(--olive);
+    border-color: rgba(63,74,60,0.28);
+  }
+  .ba-mobile-toggle-separator {
+    color: rgba(30,30,30,0.38);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
 
   /* Image layers */
   .ba-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -1060,6 +1124,15 @@
       border: 1px solid var(--border);
       scroll-snap-align: start;
     }
+    .ba-slider-wrap { cursor: default; }
+    .ba-range,
+    .ba-divider,
+    .ba-handle,
+    .ba-tag-before,
+    .ba-tag-after { display: none; }
+    .ba-mobile-toggle,
+    .ba-mobile-toggle--segmented,
+    .ba-mobile-toggle--editorial { display: inline-flex; }
     .ba-slider-wrap { aspect-ratio: 1 / 0.94; }
     .ba-footer { padding: 16px 16px 18px; }
     .ba-footer-badge { font-size: 0.56rem; letter-spacing: 0.12em; }
@@ -1273,6 +1346,19 @@
       padding-right: 18px;
       gap: 12px;
     }
+    .ba-mobile-toggle { top: 12px; left: 12px; }
+    .ba-mobile-toggle--segmented { padding: 3px; }
+    .ba-mobile-toggle--segmented .ba-mobile-toggle-btn {
+      padding: 6px 10px;
+      font-size: 0.52rem;
+    }
+    .ba-mobile-toggle--editorial {
+      gap: 7px;
+      padding: 7px 10px;
+    }
+    .ba-mobile-toggle--editorial .ba-mobile-toggle-btn {
+      font-size: 0.52rem;
+    }
     .ba-slider-wrap { aspect-ratio: 1 / 1.02; }
     .ba-footer { padding: 14px 14px 16px; }
     .ba-footer-title { font-size: 0.8rem; line-height: 1.38; }
@@ -1468,6 +1554,10 @@
           <div class="ba-layer"><div class="ba-placeholder-fill" style="background:#c5bfb4"><span class="ba-ph-label" style="color:var(--graphite)">APRÈS</span><span class="ba-ph-sub" style="color:var(--graphite)">Photo à venir</span></div></div>
           <div class="ba-layer ba-layer-before"><div class="ba-placeholder-fill" style="background:var(--olive)"><span class="ba-ph-label" style="color:var(--white)">AVANT</span><span class="ba-ph-sub" style="color:rgba(250,250,247,0.6)">Photo à venir</span></div></div>
           <input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Curseur avant/après">
+          <div class="ba-mobile-toggle ba-mobile-toggle--segmented" role="group" aria-label="Afficher l’état avant ou après">
+            <button type="button" class="ba-mobile-toggle-btn" data-ba-view="before" aria-pressed="false">Avant</button>
+            <button type="button" class="ba-mobile-toggle-btn is-active" data-ba-view="after" aria-pressed="true">Après</button>
+          </div>
           <div class="ba-divider"></div>
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
@@ -1481,6 +1571,10 @@
           <div class="ba-layer"><div class="ba-placeholder-fill" style="background:#b8bfc4"><span class="ba-ph-label" style="color:var(--graphite)">APRÈS</span><span class="ba-ph-sub" style="color:var(--graphite)">Photo à venir</span></div></div>
           <div class="ba-layer ba-layer-before"><div class="ba-placeholder-fill" style="background:#2e3a2c"><span class="ba-ph-label" style="color:var(--white)">AVANT</span><span class="ba-ph-sub" style="color:rgba(250,250,247,0.6)">Photo à venir</span></div></div>
           <input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Curseur avant/après">
+          <div class="ba-mobile-toggle ba-mobile-toggle--segmented" role="group" aria-label="Afficher l’état avant ou après">
+            <button type="button" class="ba-mobile-toggle-btn" data-ba-view="before" aria-pressed="false">Avant</button>
+            <button type="button" class="ba-mobile-toggle-btn is-active" data-ba-view="after" aria-pressed="true">Après</button>
+          </div>
           <div class="ba-divider"></div>
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
@@ -1494,6 +1588,11 @@
           <div class="ba-layer"><div class="ba-placeholder-fill" style="background:#d4cdbf"><span class="ba-ph-label" style="color:var(--graphite)">APRÈS</span><span class="ba-ph-sub" style="color:var(--graphite)">Photo à venir</span></div></div>
           <div class="ba-layer ba-layer-before"><div class="ba-placeholder-fill" style="background:var(--olive)"><span class="ba-ph-label" style="color:var(--white)">AVANT</span><span class="ba-ph-sub" style="color:rgba(250,250,247,0.6)">Photo à venir</span></div></div>
           <input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Curseur avant/après">
+          <div class="ba-mobile-toggle ba-mobile-toggle--editorial" role="group" aria-label="Afficher l’état avant ou après">
+            <button type="button" class="ba-mobile-toggle-btn" data-ba-view="before" aria-pressed="false">Avant</button>
+            <span class="ba-mobile-toggle-separator" aria-hidden="true">/</span>
+            <button type="button" class="ba-mobile-toggle-btn is-active" data-ba-view="after" aria-pressed="true">Après</button>
+          </div>
           <div class="ba-divider"></div>
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
@@ -1507,6 +1606,10 @@
           <div class="ba-layer"><div class="ba-placeholder-fill" style="background:#cbc6bc"><span class="ba-ph-label" style="color:var(--graphite)">APRÈS</span><span class="ba-ph-sub" style="color:var(--graphite)">Photo à venir</span></div></div>
           <div class="ba-layer ba-layer-before"><div class="ba-placeholder-fill" style="background:#374535"><span class="ba-ph-label" style="color:var(--white)">AVANT</span><span class="ba-ph-sub" style="color:rgba(250,250,247,0.6)">Photo à venir</span></div></div>
           <input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Curseur avant/après">
+          <div class="ba-mobile-toggle ba-mobile-toggle--segmented" role="group" aria-label="Afficher l’état avant ou après">
+            <button type="button" class="ba-mobile-toggle-btn" data-ba-view="before" aria-pressed="false">Avant</button>
+            <button type="button" class="ba-mobile-toggle-btn is-active" data-ba-view="after" aria-pressed="true">Après</button>
+          </div>
           <div class="ba-divider"></div>
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
@@ -1520,6 +1623,10 @@
           <div class="ba-layer"><div class="ba-placeholder-fill" style="background:#bfc2c5"><span class="ba-ph-label" style="color:var(--graphite)">APRÈS</span><span class="ba-ph-sub" style="color:var(--graphite)">Photo à venir</span></div></div>
           <div class="ba-layer ba-layer-before"><div class="ba-placeholder-fill" style="background:#323a31"><span class="ba-ph-label" style="color:var(--white)">AVANT</span><span class="ba-ph-sub" style="color:rgba(250,250,247,0.6)">Photo à venir</span></div></div>
           <input type="range" class="ba-range" min="0" max="100" value="50" aria-label="Curseur avant/après">
+          <div class="ba-mobile-toggle ba-mobile-toggle--segmented" role="group" aria-label="Afficher l’état avant ou après">
+            <button type="button" class="ba-mobile-toggle-btn" data-ba-view="before" aria-pressed="false">Avant</button>
+            <button type="button" class="ba-mobile-toggle-btn is-active" data-ba-view="after" aria-pressed="true">Après</button>
+          </div>
           <div class="ba-divider"></div>
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
@@ -2608,16 +2715,53 @@
     const before = wrap.querySelector('.ba-layer-before');
     const divider = wrap.querySelector('.ba-divider');
     const handle = wrap.querySelector('.ba-handle');
+    const mobileToggle = wrap.querySelector('.ba-mobile-toggle');
+    const mobileToggleButtons = mobileToggle ? Array.from(mobileToggle.querySelectorAll('[data-ba-view]')) : [];
+    const mobileMediaQuery = window.matchMedia('(max-width: 900px)');
 
     function update(val) {
       const pct = parseFloat(val);
       if (before) before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
       if (divider) divider.style.left = pct + '%';
       if (handle) handle.style.left = pct + '%';
+      if (mobileToggleButtons.length) {
+        const activeView = pct >= 50 ? 'before' : 'after';
+        mobileToggleButtons.forEach(button => {
+          const isActive = button.dataset.baView === activeView;
+          button.classList.toggle('is-active', isActive);
+          button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
     }
+
+    function setMobileToggleView(view) {
+      const nextValue = view === 'before' ? 100 : 0;
+      range.value = String(nextValue);
+      wrap.dataset.mobileView = view;
+      update(nextValue);
+    }
+
+    function syncMobileToggleMode() {
+      if (!mobileToggleButtons.length || !mobileMediaQuery.matches) return;
+      const activeButton = mobileToggleButtons.find(button => button.classList.contains('is-active'));
+      const preferredView = wrap.dataset.mobileView || activeButton?.dataset.baView || 'after';
+      setMobileToggleView(preferredView);
+    }
+
+    mobileToggleButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        setMobileToggleView(button.dataset.baView);
+      });
+    });
 
     range.addEventListener('input', () => update(range.value));
     update(50);
+    syncMobileToggleMode();
+    if (typeof mobileMediaQuery.addEventListener === 'function') {
+      mobileMediaQuery.addEventListener('change', syncMobileToggleMode);
+    } else if (typeof mobileMediaQuery.addListener === 'function') {
+      mobileMediaQuery.addListener(syncMobileToggleMode);
+    }
   });
 
   // SMOOTH SCROLL
