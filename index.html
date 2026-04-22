@@ -1082,6 +1082,7 @@
 
     .ba-grid {
       display: grid;
+      grid-template-columns: none;
       grid-auto-flow: column;
       grid-auto-columns: minmax(78vw, 1fr);
       gap: 16px;
@@ -1155,11 +1156,13 @@
       display: flex;
       align-items: stretch;
       overflow-x: auto;
-      overflow-y: visible;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
       scroll-snap-type: x mandatory;
       overscroll-behavior-x: contain;
+      touch-action: pan-x;
       scroll-padding-left: 0;
       margin-right: -24px;
       padding: 0 24px 6px 0;
