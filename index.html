@@ -939,12 +939,79 @@
 
   @media (min-width: 1101px) {
     .ba-grid {
-      grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
-      gap: 20px 24px;
-      align-items: start;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-areas:
+        "hero hero hero top top"
+        "midleft midleft midright midright midright"
+        "bottomleft bottomleft bottomleft bottomright bottomright";
+      gap: 2px;
+      align-items: stretch;
     }
-    .ba-grid > .ba-slider-card:first-child .ba-slider-wrap {
-      aspect-ratio: 1 / 0.86;
+    .ba-slider-card {
+      position: relative;
+      height: 100%;
+      min-height: 0;
+      background: transparent;
+    }
+    .ba-card--hero { grid-area: hero; }
+    .ba-card--top { grid-area: top; }
+    .ba-card--mid-left { grid-area: midleft; }
+    .ba-card--mid-right { grid-area: midright; }
+    .ba-card--bottom-left { grid-area: bottomleft; }
+    .ba-card--bottom-right { grid-area: bottomright; }
+    .ba-slider-card:not(.ba-single-card) .ba-tag-before,
+    .ba-slider-card:not(.ba-single-card) .ba-tag-after {
+      display: none;
+    }
+    .ba-slider-wrap {
+      flex: 1 1 auto;
+      aspect-ratio: auto;
+      min-height: 0;
+    }
+    .ba-card--hero .ba-slider-wrap,
+    .ba-card--mid-right .ba-slider-wrap,
+    .ba-card--bottom-left .ba-slider-wrap {
+      min-height: 350px;
+    }
+    .ba-card--top .ba-slider-wrap,
+    .ba-card--mid-left .ba-slider-wrap,
+    .ba-card--bottom-right .ba-slider-wrap {
+      min-height: 318px;
+    }
+    .ba-footer {
+      min-height: 0;
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      z-index: 4;
+      padding: 0;
+      background: transparent;
+      border-top: none;
+      display: block;
+      pointer-events: none;
+    }
+    .ba-footer-badge {
+      font-size: 0.62rem;
+      letter-spacing: 0.02em;
+      color: rgba(46, 46, 43, 0.84);
+      margin-bottom: 0;
+      text-transform: none;
+      font-weight: 400;
+    }
+    .ba-footer--plain {
+      padding-top: 5px;
+    }
+    .ba-footer--single .ba-footer-title {
+      display: none;
+    }
+    .ba-footer--tab {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      max-width: min(calc(100% - 28px), 220px);
+      padding: 3px 8px 4px;
+      margin-top: 0;
+      background: rgba(248, 244, 235, 0.96);
     }
   }
 
@@ -1534,7 +1601,7 @@
     <div class="ba-grid reveal">
 
       <!-- 1. Cuisine -->
-      <div class="ba-slider-card">
+      <div class="ba-slider-card ba-card--hero">
         <div class="ba-mobile-tabbar">
           <div class="ba-mobile-tabs" role="group" aria-label="Afficher l’état avant ou après">
             <button type="button" class="ba-mobile-tabs-btn" data-ba-view="before" aria-pressed="false">Avant</button>
@@ -1549,11 +1616,11 @@
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
         </div>
-        <div class="ba-footer"><div class="ba-footer-badge">Cuisine sur mesure</div><div class="ba-footer-title">Rénovation cuisine complète · Île-de-France</div></div>
+        <div class="ba-footer ba-footer--plain ba-footer--single ba-footer--tab"><div class="ba-footer-badge">Cuisine · IDF</div><div class="ba-footer-title">Refonte complète</div></div>
       </div>
 
       <!-- 2. SDB -->
-      <div class="ba-slider-card">
+      <div class="ba-slider-card ba-card--top">
         <div class="ba-mobile-tabbar">
           <div class="ba-mobile-tabs" role="group" aria-label="Afficher l’état avant ou après">
             <button type="button" class="ba-mobile-tabs-btn" data-ba-view="before" aria-pressed="false">Avant</button>
@@ -1568,11 +1635,11 @@
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
         </div>
-        <div class="ba-footer"><div class="ba-footer-badge">Salle de bain</div><div class="ba-footer-title">Rénovation salle de bain · Île-de-France</div></div>
+        <div class="ba-footer ba-footer--plain ba-footer--single ba-footer--tab"><div class="ba-footer-badge">Salle de bain · IDF</div><div class="ba-footer-title">Reprise complète</div></div>
       </div>
 
       <!-- 3. Salon -->
-      <div class="ba-slider-card">
+      <div class="ba-slider-card ba-card--mid-left">
         <div class="ba-mobile-tabbar">
           <div class="ba-mobile-tabs" role="group" aria-label="Afficher l’état avant ou après">
             <button type="button" class="ba-mobile-tabs-btn" data-ba-view="before" aria-pressed="false">Avant</button>
@@ -1587,11 +1654,11 @@
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
         </div>
-        <div class="ba-footer"><div class="ba-footer-badge">Salon</div><div class="ba-footer-title">Rénovation salon · Île-de-France</div></div>
+        <div class="ba-footer ba-footer--plain ba-footer--single ba-footer--tab"><div class="ba-footer-badge">Salon · IDF</div><div class="ba-footer-title">Rénovation intérieure</div></div>
       </div>
 
       <!-- 4. RDC salon -->
-      <div class="ba-slider-card">
+      <div class="ba-slider-card ba-card--mid-right">
         <div class="ba-mobile-tabbar">
           <div class="ba-mobile-tabs" role="group" aria-label="Afficher l’état avant ou après">
             <button type="button" class="ba-mobile-tabs-btn" data-ba-view="before" aria-pressed="false">Avant</button>
@@ -1606,11 +1673,11 @@
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
         </div>
-        <div class="ba-footer"><div class="ba-footer-badge">Aménagement salon</div><div class="ba-footer-title">Aménagement salon RDC · Île-de-France</div></div>
+        <div class="ba-footer ba-footer--plain ba-footer--single ba-footer--tab"><div class="ba-footer-badge">Aménagement · IDF</div><div class="ba-footer-title">Salon RDC repensé</div></div>
       </div>
 
       <!-- 5. Peinture Paris -->
-      <div class="ba-slider-card">
+      <div class="ba-slider-card ba-card--bottom-left">
         <div class="ba-mobile-tabbar">
           <div class="ba-mobile-tabs" role="group" aria-label="Afficher l’état avant ou après">
             <button type="button" class="ba-mobile-tabs-btn" data-ba-view="before" aria-pressed="false">Avant</button>
@@ -1625,16 +1692,16 @@
           <div class="ba-handle"><svg viewBox="0 0 24 24"><path d="M21 12H3"/><path d="M9 18l-6-6 6-6"/><path d="M15 6l6 6-6 6"/></svg></div>
           <div class="ba-tag-before">Avant</div><div class="ba-tag-after">Après</div>
         </div>
-        <div class="ba-footer"><div class="ba-footer-badge">Peinture appartement</div><div class="ba-footer-title">Peinture appartement · Paris</div></div>
+        <div class="ba-footer ba-footer--plain ba-footer--single ba-footer--tab"><div class="ba-footer-badge">Peinture · Paris</div><div class="ba-footer-title">Appartement remis à neuf</div></div>
       </div>
 
       <!-- 6. Portail — après seulement -->
-      <div class="ba-slider-card ba-single-card">
+      <div class="ba-slider-card ba-single-card ba-card--bottom-right">
         <div class="ba-slider-wrap">
           <div class="ba-layer"><div class="ba-placeholder-fill" style="background:#4a5547"><span class="ba-ph-label" style="color:var(--white)">APRÈS</span><span class="ba-ph-sub" style="color:rgba(250,250,247,0.6)">Photo à venir</span></div></div>
           <div class="ba-tag-after" style="right:14px;top:14px">Réalisation</div>
         </div>
-        <div class="ba-footer"><div class="ba-footer-badge">Extérieur</div><div class="ba-footer-title">Portail motorisé, fondations &amp; clôture · Île-de-France</div></div>
+        <div class="ba-footer ba-footer--plain ba-footer--single ba-footer--tab"><div class="ba-footer-badge">Extérieur · IDF</div><div class="ba-footer-title">Portail, fondations &amp; clôture</div></div>
       </div>
 
     </div>
