@@ -937,6 +937,17 @@
   .reveal-delay-3 { transition-delay: 0.15s; }
   .reveal-delay-4 { transition-delay: 0.2s; }
 
+  @media (min-width: 1101px) {
+    .ba-grid {
+      grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
+      gap: 20px 24px;
+      align-items: start;
+    }
+    .ba-grid > .ba-slider-card:first-child .ba-slider-wrap {
+      aspect-ratio: 1 / 0.86;
+    }
+  }
+
   /* ─── RESPONSIVE ─── */
   @media (max-width: 1100px) {
     .container { padding: 0 40px; }
@@ -1087,9 +1098,13 @@
       grid-auto-columns: minmax(78vw, 1fr);
       gap: 16px;
       overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       -ms-overflow-style: none;
       scroll-snap-type: x proximity;
+      overscroll-behavior-x: contain;
+      touch-action: pan-x;
       margin-left: -12px;
       margin-right: -24px;
       padding: 0 24px 6px 0;
