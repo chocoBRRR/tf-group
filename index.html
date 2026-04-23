@@ -1047,12 +1047,19 @@
     }
     #hero {
       height: auto;
-      min-height: 560px;
+      min-height: 660px;
+      min-height: max(660px, calc(100svh - 80px));
       align-items: flex-start;
     }
-    .hero-bg { background-position: center 28%; }
+    .hero-bg {
+      background-position: center 28%;
+      transform: scale(1.035);
+      filter: brightness(0.86) saturate(0.9);
+      transition: opacity 0.78s cubic-bezier(0.22,1,0.36,1), transform 4.2s ease-out, filter 0.88s ease-out;
+    }
     .hero-content {
-      min-height: 560px;
+      min-height: 660px;
+      min-height: max(660px, calc(100svh - 80px));
       padding: 108px 24px 40px;
       display: flex;
       flex-direction: column;
@@ -1066,6 +1073,8 @@
       line-height: 1.1;
       white-space: nowrap;
       flex-wrap: nowrap;
+      transform: translateY(14px);
+      animation: fadeUp 0.5s 0.1s forwards;
     }
     .hero-label::before { width: 28px; flex: 0 0 28px; }
     .hero-h1 {
@@ -1073,6 +1082,8 @@
       margin-bottom: 18px;
       font-size: clamp(2.45rem, 12vw, 4.2rem);
       line-height: 1.03;
+      transform: translateY(18px);
+      animation: fadeUp 0.56s 0.18s forwards;
     }
     .hero-sub {
       max-width: 33ch;
@@ -1080,12 +1091,16 @@
       font-size: 0.94rem;
       line-height: 1.75;
       display: none;
+      transform: translateY(14px);
+      animation: fadeUp 0.5s 0.28s forwards;
     }
     .hero-btns {
       flex-direction: row;
       flex-wrap: wrap;
       align-items: flex-start;
       gap: 12px;
+      transform: translateY(14px);
+      animation: fadeUp 0.5s 0.28s forwards;
     }
     .hero-btns .btn {
       width: auto;
@@ -1374,8 +1389,15 @@
     .form-project-trigger {
       font-size: 16px;
     }
-    .hero-content { padding: 98px 18px 34px; min-height: 520px; }
-    #hero { min-height: 520px; }
+    .hero-content {
+      padding: 108px 18px 42px;
+      min-height: 650px;
+      min-height: max(650px, calc(100svh - 80px));
+    }
+    #hero {
+      min-height: 650px;
+      min-height: max(650px, calc(100svh - 80px));
+    }
     .hero-label {
       font-size: 0.55rem;
       letter-spacing: 0.1em;
