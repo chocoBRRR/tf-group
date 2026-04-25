@@ -1021,7 +1021,215 @@
     .ba-grid { grid-template-columns: 1fr 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   }
-  @media (max-width: 900px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
+    nav {
+      padding: 0 28px;
+      height: 76px;
+      grid-template-columns: auto 1fr;
+    }
+    nav.scrolled {
+      padding: 0 24px;
+      height: 64px;
+    }
+    .nav-logo {
+      margin-left: 0;
+    }
+    .nav-logo img {
+      height: 72px;
+      max-width: 210px;
+    }
+    nav.scrolled .nav-logo img { height: 56px; }
+    .nav-links {
+      justify-content: flex-end;
+      gap: 18px;
+      padding: 0 0 0 28px;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.07em;
+    }
+    .nav-cta,
+    .nav-burger { display: none; }
+
+    #hero {
+      height: min(100svh, 860px);
+      min-height: 740px;
+      align-items: flex-end;
+    }
+    .hero-bg {
+      background-position: 58% 52%;
+    }
+    .hero-content {
+      padding: 0 40px 84px;
+    }
+    .hero-label {
+      max-width: 420px;
+      margin-bottom: 18px;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      gap: 12px;
+    }
+    .hero-label::before {
+      width: 28px;
+      flex: 0 0 28px;
+    }
+    .hero-h1 {
+      max-width: 10.4ch;
+      margin-bottom: 24px;
+      font-size: clamp(4rem, 8.2vw, 5.35rem);
+      line-height: 1.03;
+    }
+    .hero-sub {
+      display: block;
+      max-width: 38ch;
+      margin-bottom: 34px;
+      font-size: 0.92rem;
+      line-height: 1.72;
+    }
+    .hero-btns {
+      gap: 12px;
+    }
+    .hero-btns .btn {
+      padding: 14px 24px;
+      font-size: 0.72rem;
+    }
+    #proof-bar { padding: 20px 0; }
+    .proof-item { gap: 10px; padding: 0 28px; }
+    .proof-icon { font-size: 0.9rem; }
+    .proof-text { font-size: 0.66rem; letter-spacing: 0.11em; }
+
+    .about-trio {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 20px;
+      align-items: stretch;
+    }
+    .founder-col {
+      width: 100%;
+      padding: 0 18px;
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      align-items: center;
+      text-align: center;
+    }
+    .founder-photo-frame {
+      width: 132px;
+      height: 132px;
+      margin: 0 auto 16px;
+    }
+    .founder-name { font-size: 1.08rem; }
+    .founder-role,
+    .founder-years { white-space: normal; }
+    .about-center {
+      grid-column: 1 / -1;
+      order: -1;
+      margin-top: 0;
+      align-items: center;
+      text-align: center;
+      max-width: 48ch;
+      padding-bottom: 20px;
+    }
+    .about-center .label { justify-content: center; }
+    .about-center .section-title {
+      margin-bottom: 28px;
+      font-size: clamp(2.2rem, 6vw, 3.25rem);
+    }
+    .about-center .section-title em { white-space: normal; }
+    .about-intro {
+      text-align: center;
+      font-size: 0.95rem;
+      line-height: 1.82;
+      margin-bottom: 18px;
+      max-width: 44ch;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .service-card {
+      padding: 34px 28px 30px;
+    }
+    .service-title {
+      max-width: none;
+      font-size: 1.12rem;
+    }
+    .service-desc {
+      font-size: 0.83rem;
+      line-height: 1.72;
+    }
+
+    .avis-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .avis-card {
+      padding: 36px 30px;
+    }
+
+    .projet-grid {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 36px;
+    }
+    .form-row { grid-template-columns: 1fr; }
+
+    .faq-grid {
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 44px;
+    }
+
+    .footer-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 18px;
+    }
+    .footer-grid > div:first-child,
+    .footer-grid > div:last-child { grid-column: 1 / -1; }
+    .footer-grid > div:nth-child(2) .footer-links,
+    .footer-grid > div:nth-child(3) .footer-links {
+      align-items: flex-start;
+    }
+    .footer-brand {
+      flex-direction: row;
+      align-items: flex-start;
+      width: 100%;
+      gap: 14px;
+    }
+    .footer-logo img { height: 56px; }
+    .footer-desc { max-width: 36ch; }
+    .footer-grid > div:last-child {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 8px 18px;
+      align-items: start;
+      justify-items: start;
+    }
+    .footer-grid > div:last-child .footer-col-title {
+      grid-column: 1 / -1;
+      margin-bottom: 4px;
+    }
+    .footer-grid > div:last-child .footer-contact-item {
+      margin-bottom: 0;
+      padding: 0;
+      border: none;
+      background: transparent;
+      justify-content: flex-start;
+      text-align: left;
+    }
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .footer-legal { gap: 16px; flex-wrap: wrap; }
+
+    .section-pad { padding: 92px 0; }
+    #about { padding: 88px 0 100px; }
+    #methode { padding: 88px 0 84px; }
+    .container { padding: 0 32px; }
+    #final-cta { padding: 96px 32px 84px; }
+    .methode-promise-wrap { margin-top: 44px; }
+    .methode-promise-card { max-width: 100%; }
+  }
+  @media (max-width: 767px) {
     nav {
       padding: 0 20px;
       height: 74px;
@@ -1048,7 +1256,7 @@
     #hero {
       height: auto;
       min-height: 620px;
-      align-items: flex-start;
+      align-items: stretch;
     }
     .hero-bg {
       background-position: 62% 63%;
@@ -1058,10 +1266,10 @@
     }
     .hero-content {
       min-height: 620px;
-      padding: 200px 28px 46px;
+      padding: 108px 28px 46px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: flex-end;
       align-items: flex-start;
     }
     .hero-label {
@@ -1191,7 +1399,7 @@
       -ms-overflow-style: none;
       scroll-snap-type: x proximity;
       overscroll-behavior-x: contain;
-      touch-action: pan-x;
+      touch-action: manipulation;
       margin-left: -12px;
       margin-right: -24px;
       padding: 0 24px 6px 0;
@@ -1264,7 +1472,7 @@
       -ms-overflow-style: none;
       scroll-snap-type: x mandatory;
       overscroll-behavior-x: contain;
-      touch-action: pan-x;
+      touch-action: manipulation;
       scroll-padding-left: 0;
       margin-right: -24px;
       padding: 0 24px 6px 0;
@@ -1396,7 +1604,7 @@
       font-size: 16px;
     }
     .hero-content {
-      padding: 196px 20px 42px;
+      padding: 102px 20px 42px;
       min-height: 600px;
     }
     #hero {
@@ -1876,7 +2084,7 @@
       </div>
       <div class="avis-card reveal reveal-delay-1">
         <div class="avis-title">Merci T&amp;F !</div>
-        <p class="avis-text">Flavien a cadré le projet dès le début avec un devis très détaillé. Ensuite, le chantier a été bien suivi et on savait toujours où on en était. Le résultat est exactement ce qu'on avait imaginé. Un grand merci à toute l'équipe.</p>
+        <p class="avis-text">Le projet a été très bien cadré dès le départ, puis le chantier a été suivi avec sérieux du début à la fin. Nous avons toujours su où nous en étions, et le résultat est exactement à la hauteur de nos attentes. Un grand merci à toute l'équipe.</p>
         <div class="avis-author">
           <div class="avis-avatar">K</div>
           <div>
